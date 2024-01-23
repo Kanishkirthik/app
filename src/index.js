@@ -2,12 +2,52 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Filter from './Filter2'
+import Course from './Course';
 import reportWebVitals from './reportWebVitals';
-
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import {Route,Routes,BrowserRouter} from 'react-router-dom'
+import Register from './Register';
+import Login from './Login';
+import Profile from './Profile';
+import Enrolled from './EnrolledCourse';
+import Completed from './Completed';
+import Timer from './Timer';
+import Payment from './Payment';
+import Cert from './Certificate';
+import ViewCourse from './ViewCourse';
+import AdminDashboard from './AdminDashboard';
+import AddtoCart from './AddtoCart';
+import Nav from "./Nav2";
+import Checkouts from './Checkout';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+<BrowserRouter>
+<Routes>
+<Route path='/' element={<App/>}></Route>
+<Route path='/:Data' element={<App/>}></Route>
+<Route path='/Nav' element={<Nav/>}></Route>
+<Route path='/Course' element={<Course><Filter/></Course>}></Route>
+<Route path='/Course:id' element={<Course><Filter/></Course>}></Route>
+<Route path='/Register' element={<Register/>}></Route>
+<Route path='/Login' element={<Login/>}></Route>
+<Route path='/Profile/:username' element={<Profile/>}></Route>
+<Route path='/Enrolled' element={<Enrolled/>}></Route>
+<Route path='/Completed' element={<Completed/>}></Route>
+<Route path='/Certificate' element={<Cert/>}></Route>
+<Route path='/Payment' element={<Payment/>}></Route>
+<Route path='/Timer' element={<Timer/>}></Route>
+<Route path="/ViewCourse/:id"element={<ViewCourse/>}></Route>
+<Route path="/Admin/:username"element={<AdminDashboard/>}></Route>
+<Route path="/Cart/:id"element={<AddtoCart/>}></Route>
+<Route path="/Checkouts"element={<Checkouts/>}></Route>
+
+   </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
