@@ -31,12 +31,12 @@ export default function Login(){
     return (
       <>
       <div className="row"><Nav></Nav></div> 
-      <div className="container-fluid" style={{color:'white ' ,width:'auto'}}>
+      <div className="container-fluid" style={{color:'#FFA500' ,width:'auto'}}>
        <div
         className="row justify-content-center  "
         style={{ height: "98vh",width:'auto' }}
         >
-           <div className=" shadow  col-md-3 col-sm-3 align-self-center bg-dark  rounded-4" >
+           <div className=" shadow  col-md-3 col-sm-3 align-self-center bg-dark  rounded-4 fs-3" >
             <form className="p-3 fs-6" onSubmit={handleSubmit}>
               <div>
                 <label for="username" className="form-label">
@@ -65,13 +65,13 @@ export default function Login(){
                 ></input>
               </div>
               <div>
-                <button className="btn w-100 text-white rounded-5 mb-2"   style={{backgroundColor:'black'}} type="submit">Login</button>
-                <button className="btn w-100 text-white rounded-5 mb-2 "   style={{backgroundColor:'black'}} onClick={handleGoogleLogin}>Login with Google</button>
+                <button className="btn w-100 rounded-5 mb-2"   style={{backgroundColor:'black',color:'#FFA500'}} type="submit">Login</button>
+                <button className="btn w-100 rounded-5 mb-2 "   style={{backgroundColor:'black',color:'#FFA500'}} onClick={handleGoogleLogin}>Login with Google</button>
               </div>
               <div className="text-end" >ForgotPassword</div>
               <div>
               <div className="text-center ">Don't have Account ?</div>
-             <button className="btn w-100 text-white  rounded-5"   style={{backgroundColor:'black'}}  type="button" onClick={()=>navigate("/Register")}>CreateAccount</button>
+             <button className="btn w-100 rounded-5"   style={{backgroundColor:'black',color:'#FFA500'}}  type="button" onClick={()=>navigate("/Register")}>CreateAccount</button>
               </div>
             </form>
           </div>

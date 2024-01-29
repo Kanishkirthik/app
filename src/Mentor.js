@@ -3,8 +3,8 @@ import Dp from "./717821p224_photo .jpg";
 import { Link } from "react-router-dom";
 function Mentor() {
   return (
-    <div>
-      <div class="card  " style={{ width: "auto" ,height:'auto' }}>
+    <div  style={{color:'#FFA500'}}>
+      <div class="card  " style={{ width: "auto" ,height:'auto' ,color:'#FFA500'}}>
         <img
           src={Dp}
           className=" align-self-center  rounded-pill card-img-top   w-50  h-10 "
@@ -12,8 +12,8 @@ function Mentor() {
         />
 
         <div
-          class="card-body text-white "
-          style={{ backgroundColor: "#526D82" }}
+          class="card-body  bg-dark "
+       
         >
           <h5 class="card-title text-center">xxx</h5>
           <h6>MENTOR M.E</h6>
@@ -26,12 +26,13 @@ function Mentor() {
             <i class="bi bi-telephone p-2"></i>91+6353789923
           </h6>
           <div
-            className="w-100 text-center "
-            style={{ backgroundColor: "#526D82" }}
+            className="w-100 text-center  bg-black "
+          
           >
             <Link
-              className=" text-decoration-none text-center text-white "
+              className=" text-decoration-none text-center  "
               to={"/Profile"}
+              style={{color:'#FFA500'}}
             >
               View Profile
             </Link>

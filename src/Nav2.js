@@ -14,7 +14,7 @@ const navigate=useNavigate();
       <div className=" position-sticky">
         <div className="row ">
           <div className="col">
-            <nav class=" navbar  navbar-expand-md navbar-expand-lg  bg-dark  " >
+            <nav class=" navbar  navbar-expand-md navbar-expand-lg  bg-dark fs-6  " >
               <div class="container-fluid">
                 <button
                   class="navbar-toggler"
@@ -33,10 +33,10 @@ const navigate=useNavigate();
                 >
                   <ul class="navbar-nav   ">
                     <li class="nav-item  ">
-                    <Link className ="nav-link  active "  aria-current="page" style={{textDecoration:'none',color:'white'}} to={'/'}>Home</Link>
+                    <Link className ="nav-link  active "  aria-current="page" style={{textDecoration:'none',color:' #FFA500'}} to={'/'}>Home</Link>
                     </li>
                     <li class="nav-item ml-3">
-                    <Link className ="nav-link" style={{textDecoration:'none',color:'white'}} to={'/Course'}>Course</Link>
+                    <Link className ="nav-link" style={{textDecoration:'none',color:' #FFA500'}} to={'/Course'}>Course</Link>
                     </li>
                   </ul>
                   
@@ -45,7 +45,7 @@ const navigate=useNavigate();
                   </div>
                   <div className=' col  d-flex justify-content-end  '>
                   {User.length >0 ?  <div class="dropdown-center text-end  ">
-                    <a style={{textDecoration:'none', color:'white'}}
+                    <a style={{textDecoration:'none',color:' #FFA500'}}
                       className=" dropdown-toggle   "
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
@@ -59,7 +59,7 @@ const navigate=useNavigate();
                      </div>
                     </div>
                      
-                  </div> :   <Link className=' text-white nav-link       'style={{textDecoration:'none',color:'white'}}  to={'/Login'}>Login/SignUp </Link>
+                  </div> :   <Link className='  nav-link       'style={{textDecoration:'none',color:' #FFA500'}}  to={'/Login'}>Login/SignUp </Link>
                    
 }
                 </div>

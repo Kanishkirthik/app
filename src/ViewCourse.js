@@ -12,7 +12,7 @@ export default function  ViewCourse(){
 const {id}=useParams();
 console.log(id);
 const [username, setUsername] = useState(""); 
-const[Enrolled,setEnrolled]=useState(true);
+const[Enrolled,setEnrolled]=useState(false);
 const filterd=data.filter((e)=>e._id===id);
 let Navigate=useNavigate();
 let handleEnrolled=function(){
@@ -32,16 +32,18 @@ axios.post("")
 }
 const [StudentName,setStudentName]=useState();
     return (
+      <div >
+    <div className="row">
+      <Nav />
+    </div>
       <div
-        className="container-fluid text-white  "
-        style={{ backgroundColor: "#9DB2BF" }}
+        className="container-fluid bg-dark h-100"
+        style={{color:'#FFA500'}}
       >
-        <div className="row">
-          <Nav />
-        </div>
+       
         {filterd.map((e) => (
           <>
-            <div className="row justify-content-center ">
+            <div className="row justify-content-center " style={{color:'#FFA500'}}>
               <div
                 className="col-sm-4 align-self-center "
                 style={{ height: "auto" }}
@@ -58,17 +60,17 @@ const [StudentName,setStudentName]=useState();
                   ></img>
                 </div>
               </div>
-              <div className="col-sm-4 "  style={{ backgroundColor: "#526D82"}}>
+              <div className="col-sm-4 ">
              <p style={{textAlign:'justify',textJustify:'inter-word'}} className="p-3 fs-6">{e.Des}</p>
               </div>
             </div>
           
             <div className="row justify-content-center mt-3">
               <h3 className="text-center">Our Traditional way of learning</h3>
-              <div className="col-sm-4  col-xxl-2 ">
+              <div className="col-sm-3 col-md-5  col-xl-4 col-xxl-3 col-lg-4  ">
               <Mentor />
              </div>
-             <div className="col-sm-3  align-self-center  rounded-4 " style={{ backgroundColor: "#526D82"}}>
+             <div className="col-sm-3 bg-dark align-self-center  rounded-4 ">
               <form  className="p-3 fs-6" onSubmit={handleSubmit}>
                 <div>
                 <label for="username" className="form-label">
@@ -94,10 +96,11 @@ const [StudentName,setStudentName]=useState();
                 required={true}
               ></input>
                <button
-                className="btn text-white  w-100 rounded-5 mb-2"
-                style={{backgroundColor:'#27374D'}}
+                className="btn bg-black  w-100 rounded-5 mb-2"
+       
                 type="submit"
                 value={"Register"}
+                style={{color:'#FFA500'}}
               >
                 Register
               </button>
@@ -172,7 +175,9 @@ const [StudentName,setStudentName]=useState();
               </div>
             </div>
           ))}
-          <Footer/>
+ 
+      </div>
+      <Footer/>
       </div>
       
     );

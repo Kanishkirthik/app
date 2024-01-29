@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Nav from "./Nav2";
-import {auth} from './firebase'
+
 import Footer from "./Footer";
 export default function Register() {
   const navigate = useNavigate();
@@ -13,46 +13,41 @@ export default function Register() {
   const [confirmpassword, setConfimPassword] = useState("");
   const [Role, setRole] = useState("");
 
-  let handleSubmit=async(event)=> {
+  function handleSubmit(event) {
     event.preventDefault();
     console.log(username);
     console.log(password);
     console.log(Role);
     if(password===confirmpassword){
-    try{
-    const user=await auth.createUserWithEmailAndPassword(username,password);
-    console.log(user.user.uid);
     axios
-      .post("http://localhost:3001/Register", {
-        Username: user.user.email,
-        Uid:user.user.uid,
+      .post("https://kk-elearn.onrender.com/Register", {
+        Username: username,
+        Password: password,
         Role:Role,
       })
-      .then((result) => (axios.post("http://localhost:3001/Profile", {Username:result.data.Username,
+      .then((result) => (axios.post("https://kk-elearn.onrender.com/Profile", {Username:result.data.Username,
       Role:result.data.Role}).then(console.log("inserted")).catch((err)=>console.log(err))))
       .catch((err) => console.log(err))
       
-    }
-    catch(err){
-     console.log(err)
-    }
     }
 
   }
 
   return (
-    <>
-    <div className="row">
+    <div
+      style={{ color:'#FFA500', width: "auto" }}
+    >
+      <div className="row">
         <Nav></Nav>
       </div>
-  
+      <div className="container-fluid">
       <div
-        className="row justify-content-center  text-white "
+        className="row justify-content-center  "
         style={{ height: "98vh", width: "auto" }}
       >
         <div
-          className=" shadow  col-md-3 bg-dark  col-sm-3 align-self-center  rounded-4"
-      
+          className=" shadow  col-md-3 col-sm-3 align-self-center  rounded-4 bg-dark"
+         
         >
           <form className="p-3 fs-6" onSubmit={handleSubmit}>
             <div>
@@ -135,10 +130,10 @@ export default function Register() {
             <span></span>
             <div>
               <button
-                className="btn text-white  w-100 rounded-5 mb-2"
-                style={{ backgroundColor: "black" }}
+                className="btn bg-black  w-100 rounded-5 mb-2"
                 type="submit"
                 value={"Register"}
+                style={{ color:'#FFA500', width: "auto" }}
               >
                 Register
               </button>
@@ -149,11 +144,11 @@ export default function Register() {
             <div className="mb-2 text-center"> I alreday have Account?</div>
             <div>
               <button
-                className=" btn  text-white  w-100 rounded-5"
+                className=" btn  bg-black  w-100 rounded-5"
                 type="button"
                 value={"Login"}
                 onClick={() => navigate("/Login")}
-                style={{ backgroundColor: "black" }}
+                style={{ color:'#FFA500', width: "auto" }}
               >
                 Login
               </button>
@@ -161,7 +156,8 @@ export default function Register() {
           </form>
         </div>
       </div>
-    <Footer />
-    </>
+      </div>
+      <Footer />
+    </div>
   );
 }
