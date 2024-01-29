@@ -25,13 +25,14 @@ export default function AddtoCart() {
   const islogin = true;
 
   return (
-    <div className="container-fluid justify-content-evenly" style={{ backgroundColor: '#9DB2BF' }}>
-          <div className="row mb-3">
-        <Nav istrue={islogin}></Nav>
-      </div>
+    <>
+    <div className="row mb-3">
+    <Nav istrue={islogin}></Nav>
+  </div>
+    <div className="container-fluid justify-content-evenly " >
       <div className="row">
-        <div className="col">
-          <table class="table table-responsive table-bordered text-center">
+        <div className="col-sm-12 table-responsive">
+          <table class="table  table-bordered text-center">
             <thead>
               <tr>
                 <th scope="col">Course Name</th>
@@ -58,7 +59,8 @@ export default function AddtoCart() {
       <div className="row justify-content-center">
         <button className=" w-auto  btn text-center text-white" style={{backgroundColor:'#27374D'}}>Checkout</button>
       </div>
-      <Footer/>
     </div>
+    <Footer/>
+    </>
   );
 }

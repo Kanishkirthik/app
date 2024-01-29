@@ -8,6 +8,7 @@ import DashBoard from "./MentorDashBoard";
 import axios from "axios";
 import { useNavigate, useParams,Link } from "react-router-dom";
 import { data } from "./App";
+import { auth } from "./firebase";
 let filter = [];
 let MentorCourse=[];
 export default function Profile() {
@@ -50,12 +51,12 @@ export default function Profile() {
       {filter.map((e) => (
         <div
           className="row  "
-          style={{ backgroundColor: "#9DB2BF", minHeight: "calc(100vh)" }}
+          style={{ minHeight: "calc(100vh)" }}
         >
           <div className=" col-md-3 col-xxl-2 col-xs-3 col-lg-3 col-sm-3 text-white  ">
             <div
-              class="card   h-100"
-              style={{ backgroundColor: "#27374D", width: "auto" }}
+              class="card  bg-dark   h-100"
+              style={{  width: "auto" }}
             >
               <img
                 src={Dp}
@@ -72,7 +73,6 @@ export default function Profile() {
                     class="list-group text-start  "
                     style={{
                       listStyleType: "none",
-                      backgroundColor: "#27374D",
                     }}
                   >
                     <div className="row h-100 mb-3 ">
@@ -152,15 +152,13 @@ export default function Profile() {
               </div>
               <div className="align-self-center" style={{ width: "100%" }}>
                 <button
-                  className="btn text-white w-100 "
-                  style={{ backgroundColor: "#27374D" }}
-                  onClick={() => {
-                    filter.pop();
-                    console.log(filter);
-                    navigate("/");
-                    window.location.reload();
-                  }}
-                >
+                  className="btn  text-white w-100 "
+                  style={{ backgroundColor: "black" }}
+                  onClick={async() =>{try{
+                    await auth.signOut();
+                  }catch(err){
+                    console.log(err)
+                  }}} >
                   log out
                 </button>
               </div>

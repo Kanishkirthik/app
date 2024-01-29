@@ -1,4 +1,5 @@
 import axios from "axios";
+import './index.css'
 import { filter } from "./Profile";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -54,14 +55,14 @@ export default function DashBoard(props) {
   let id = "";
   let handelDelete=function(){
     Searched.map((e) => (id = e._id));
-    axios.delete(`http://localhost:3001/Course/${id}`).then(()=>console.log("deleted")).catch((err)=>console.log(err));
+    axios.delete(`https://kk-elearn.onrender.com/Course/${id}`).then(()=>console.log("deleted")).catch((err)=>console.log(err));
   }
   let handleupdate = function(e) {
     e.preventDefault();
     Searched.map((e) => (id = e._id));
     if(Updatedata.Name.length>0){
     axios
-      .put(`http://localhost:3001/Course/${id}`, {
+      .put(`https://kk-elearn.onrender.com/Course/${id}`, {
         Name: Updatedata.Name
       })
       .then((result) => console.log())
@@ -69,7 +70,7 @@ export default function DashBoard(props) {
     }
     if(Updatedata.Image.length>0){
       axios
-        .put(`http://localhost:3001/Course/${id}`, {
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
           Image: Updatedata.Image
         })
         .then((result) => console.log())
@@ -77,7 +78,7 @@ export default function DashBoard(props) {
       }
       if(Updatedata.Des.length>0){
         axios
-          .put(`http://localhost:3001/Course/${id}`, {
+          .put(`https://kk-elearn.onrender.com/Course/${id}`, {
            Des : Updatedata.Des
           })
           .then((result) => console.log())
@@ -85,7 +86,7 @@ export default function DashBoard(props) {
         }
         if(Updatedata.M1Name.length>0){
           axios
-            .put(`http://localhost:3001/Course/${id}`, {
+            .put(`https://kk-elearn.onrender.com/Course/${id}`, {
               M1Name: Updatedata.M1Name
             })
             .then((result) => console.log())
@@ -93,7 +94,7 @@ export default function DashBoard(props) {
           }
           if(Updatedata.M2Name.length>0){
             axios
-              .put(`http://localhost:3001/Course/${id}`, {
+              .put(`https://kk-elearn.onrender.com/Course/${id}`, {
                 M2Name: Updatedata.M2Name
               })
               .then((result) => console.log())
@@ -101,7 +102,7 @@ export default function DashBoard(props) {
             }
             if(Updatedata.M3Name.length>0){
               axios
-                .put(`http://localhost:3001/Course/${id}`, {
+                .put(`https://kk-elearn.onrender.com/Course/${id}`, {
                   M3Name: Updatedata.M3Name
                 })
                 .then((result) => console.log())
@@ -109,14 +110,14 @@ export default function DashBoard(props) {
               }
               if(Updatedata.M1Video.length>0){
                 axios
-                  .put(`http://localhost:3001/Course/${id}`, {
+                  .put(`https://kk-elearn.onrender.com/Course/${id}`, {
                     M1Video: Updatedata.M1Video
                   })
                   .then((result) => console.log())
                   .catch((error) => console.log());
                 }if(Updatedata.M2Video.length>0){
                   axios
-                    .put(`http://localhost:3001/Course/${id}`, {
+                    .put(`https://kk-elearn.onrender.com/Course/${id}`, {
                       M2Video: Updatedata.M2Video
                     })
                     .then((result) => console.log())
@@ -124,7 +125,7 @@ export default function DashBoard(props) {
                   }
                   if(Updatedata.M3Video.length>0){
                     axios
-                      .put(`http://localhost:3001/Course/${id}`, {
+                      .put(`https://kk-elearn.onrender.com/Course/${id}`, {
                         M3Video: Updatedata.M3Video
                       })
                       .then((result) => console.log())
@@ -132,7 +133,7 @@ export default function DashBoard(props) {
                     }
                     if(Updatedata.Level.length>0){
                       axios
-                        .put(`http://localhost:3001/Course/${id}`, {
+                        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
                           Level: Updatedata.Level
                         })
                         .then((result) => console.log())
@@ -140,7 +141,7 @@ export default function DashBoard(props) {
                       }
                       if(Updatedata.Price.length>0){
                         axios
-                          .put(`http://localhost:3001/Course/${id}`, {
+                          .put(`https://kk-elearn.onrender.com/Course/${id}`, {
                             Price: Updatedata.Price
                           })
                           .then((result) => console.log())
@@ -167,7 +168,7 @@ export default function DashBoard(props) {
     console.log(MentorName);
     E.preventDefault();
     axios
-      .post("http://localhost:3001/Course", {
+      .post("https://kk-elearn.onrender.com/Course", {
         Name: Course.Name,
         Image: Course.Image,
         Des: Course.Des,
@@ -189,37 +190,37 @@ export default function DashBoard(props) {
   return (
     <div className="container-fluid text-white">
       <div className="row">
-        <h3 className="fst-italic ">
+        <h3 className="fst-italic text-dark ">
           "Teachers have three loves: love of learning, love of learners, and
           the love of bringing the first two loves together."
         </h3>
       </div>
       <div className="row">
 
-        <div class="btn-group text-white " role="group" aria-label="Basic outlined example">
-          <button type="button" class="btn" onClick={()=>{
+        <div class="btn-group text-white bg-black " role="group" aria-label="Basic outlined example">
+          <button type="button " class="btn  nav-item" onClick={()=>{
             setCreate(true);
             setUpdate(false);
             setDelete(false);
             setSearched("");
           }}
-          style={{backgroundColor:'#27374D',color:'white'}}>
+          style={{backgroundColor:'black',color:'white'}}>
             Create Your Course
           </button>
-          <button type="button" class="btn "  onClick={()=>{
+          <button type="button" class="btn  nav-item"  onClick={()=>{
             setCreate(false);
             setUpdate(true);
             setDelete(false);
             setSearched("");
-          }} style={{backgroundColor:'#27374D',color:'white'}}>
+          }} style={{backgroundColor:'black',color:'white'}}>
             Update Your Course
           </button>
-          <button type="button" class="btn " onClick={()=>{
+          <button type="button" class="btn nav-item " onClick={()=>{
             setCreate(false);
             setUpdate(false);
             setDelete(true);
             setSearched("");
-          }} style={{backgroundColor:'#27374D' ,color:'white'}}> 
+          }} style={{backgroundColor:'black' ,color:'white'}}> 
            Delete
           </button>
         </div>
@@ -228,19 +229,18 @@ export default function DashBoard(props) {
       {Create && (
         <div className="row  mt-3" style={{ height: "auto", width: "auto" }}>
           <div
-            className="  text-white col   rounded-4"
-            style={{
-              backgroundColor: "#526D82",
-            }}
+            className="  text-white col  bg-dark  rounded-2 "
+          
           >
             <div
-              clasName="row justify-content-center"
+              clasName="row r"
               style={{ height: "auto", width: "auto" }}
             >
-              <div  className="p-3 fs-6 col-md-6 col-lg-5 col-xl-4 col-xxl-3 col-sm-8  align-self-center " >
+              <div  className="p-3 justify-content-center " >
               <form
           
                 onSubmit={handleSubmit}
+                className=" fs-6 col-md-6 col-lg-5 col-xl-4 col-xxl-3 col-sm-8 align-self-center"
               >
                 <div>
                   <label for="CourseName" className="form-label">
@@ -248,7 +248,7 @@ export default function DashBoard(props) {
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-5"
+                    className="form-control rounded-2"
                     id="CourseName"
                     placeholder="Enter the Course Name"
                     required={true}
@@ -266,7 +266,7 @@ export default function DashBoard(props) {
                   </label>
                   <input
                     type="url"
-                    className="form-control rounded-5"
+                    className="form-control rounded-2"
                     id="ImageUrl"
                     onChange={(e) => {
                       setCourse({
@@ -300,7 +300,7 @@ export default function DashBoard(props) {
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-5"
+                    className="form-control rounded-2"
                     id="M1Name"
                     onChange={(e) => {
                       setCourse({
@@ -318,7 +318,7 @@ export default function DashBoard(props) {
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-5"
+                    className="form-control rounded-2"
                     id="M2Name"
                     onChange={(e) => {
                       setCourse({
@@ -336,7 +336,7 @@ export default function DashBoard(props) {
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-5"
+                    className="form-control rounded-2"
                     id="M3Name"
                     onChange={(e) => {
                       setCourse({
@@ -354,7 +354,7 @@ export default function DashBoard(props) {
                   </label>
                   <input
                     type="url"
-                    className="form-control rounded-5"
+                    className="form-control rounded-2"
                     id="M1Video"
                     onChange={(e) => {
                       setCourse({
@@ -390,7 +390,7 @@ export default function DashBoard(props) {
                   </label>
                   <input
                     type="url"
-                    className="form-control rounded-5"
+                    className="form-control rounded-2"
                     id="M3Video"
                     onChange={(e) => {
                       setCourse({
@@ -408,7 +408,7 @@ export default function DashBoard(props) {
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-5"
+                    className="form-control rounded-2"
                     id="Level"
                     onChange={(e) => {
                       setCourse({
@@ -426,7 +426,7 @@ export default function DashBoard(props) {
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-5"
+                    className="form-control rounded-2"
                     id="Price"
                     onChange={(e) => {
                       setCourse({
@@ -440,8 +440,8 @@ export default function DashBoard(props) {
                 </div>
                 <div className="mt-2">
                   <button
-                    className="btn text-white  w-100 rounded-5 mb-2"
-                    style={{ backgroundColor: "#27374D" }}
+                    className="btn text-white  w-100 rounded-2 mb-2"
+                    style={{ backgroundColor: "black" }}
                     type="submit"
                     value={"Create"}
                   >
@@ -465,7 +465,7 @@ export default function DashBoard(props) {
                 aria-label="Search"
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button class="btn" type="submit">
+              <button class="btn bg-black text-white " type="submit">
                 Search
               </button>
             </form>
@@ -530,7 +530,7 @@ export default function DashBoard(props) {
                     </Link>
                   </div>
                   {Delete &&(
-                    <button style={{ backgroundColor: "#27374D" }}  className="btn text-white w-100 mt-2" onClick={handelDelete}>Delete</button>
+                    <button style={{ backgroundColor: "black" }}  className="btn text-white w-100 mt-2" onClick={handelDelete}>Delete</button>
                   )}
                 </div>
               </div>

@@ -18,19 +18,17 @@ export default function Course(){
  let id;
  datauser.map((e)=>id=e._id);
     return (
-        <div className="container-fluid" style={{ backgroundColor: "#9DB2BF" }}>
-          <div className="row"> <Nav /></div>
-          <div className="row">
-          <Search>
-            <Filter/>
+      <div>
+      <div className="row"> <Nav ><Search>
           </Search>
-            </div>
-            <div className="row " >
+          </Nav></div>
+        <div>
+            <div className="row" >
             {Coursedata.map((e) => (
-              <div className="col-sm-3 col-md-5  col-xl-4 col-xxl-3 col-lg-4  rounded-4 ">
-                <div class=" shadow card  text-white " style={{ width: "auto" }}>
-                  <img src={e.Image} class="card-img-top" alt="..." />
-                  <div className=" card-body text-white " style={{backgroundColor:'#526D82'}}>
+              <div className="col-sm-3 col-md-5  col-xl-4 col-xxl-3 col-lg-4    ">
+                <div class="  shadow card  text-white bg-dark  " style={{ width: "auto" }}>
+                  <img src={e.Image} class="card-img-top" alt="..." width={'auto'}  />
+                  <div className=" card-body text-white " >
                     <h5 className="card-title text-white ">{e.Name}</h5>
                     <h6 className="text-end ">
                       <i class="bi bi-currency-rupee"></i>
@@ -43,7 +41,7 @@ export default function Course(){
                     </h6>
                     <p className="card-text text-justify " style={{textAlign:'justify',textJustify:'inter-word'}}>{e.Des.slice(0,200)}</p>
                    <h6 className="text-end " > <i class="bi btn text-end bi-cart-plus-fill" onClick={()=>{ id && axios.put(`https://kk-elearn.onrender.com/Profile/${id}`,{Cart:e.Name}).then((result)=>console.log('updated cart')).catch((err)=>console.log(err))}}></i></h6> 
-                    <div href="" className="w-100 text-center " style={{backgroundColor:'#27374D'}}>
+                    <div href="" className="w-100 text-center " style={{backgroundColor:'black'}}>
                       <Link
                         className=" text-decoration-none text-center text-white"
                         to={`/ViewCourse/${e._id}`}
@@ -57,8 +55,8 @@ export default function Course(){
               </div>
             ))}
           </div>
-          <Footer/>
         </div>
-      
+        <Footer/>
+      </div>
     );
 }

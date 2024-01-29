@@ -7,23 +7,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function Search({children}) {
   return (
     <>
-    <Form>
-     <FormGroup >
-        <Row className='m-1 justify-content-center'>
-            <Col md='3'>
-        <Form.Control type='text' placeholder='Search your Course' ></Form.Control>
-        </Col>
-        <Col md='3' >
-        <Form.Control  style={{backgroundColor:'#27374D' }} className='text-white ' type='submit'value={'search'}></Form.Control>
-        </Col>
-        </Row>
-        <Row>
-          <Col className='text-end'>
-          {children}
-          </Col>
-        </Row>
-     </FormGroup>
-    </Form>
+          <div >
+            <form class="d-flex" role="search">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Enter the name of Course "
+                aria-label="Search"
+              />
+              <button class="btn bg-black text-white" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
+   
     </>
   )
 }

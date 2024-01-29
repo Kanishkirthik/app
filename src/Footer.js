@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 export default function Footer(){
     return(
-        <footer  className="conatiner lh-5 rounded-1 " style={{backgroundColor:'#27374D', marginTop:'98vh' }}>
+        <footer  className="conatiner lh-5   bg-dark" style={{ marginTop:'98vh' }}>
     
             <div className="row " >
              <div className="col-sm-2 m-2 text-white ">

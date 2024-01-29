@@ -6,12 +6,12 @@ export default function Filter() {
   return (
     <>
       <button
-        class=" position-sticky btn  button text-white  "
+        class=" btn  button text-white  "
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasScrolling"
         aria-controls="offcanvasScrolling"
-        style={{backgroundColor:'#27374D'}}
+        style={{backgroundColor:'black'}}
       >Filter</button>
       <div
         class="container text-black  text-start  offcanvas offcanvas-start"

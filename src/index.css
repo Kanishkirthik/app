@@ -57,9 +57,11 @@ code {
   background-color: white;
   border-radius: 20%;
 }
-.nav_items:hover{
-  background-color:"#3F72AF";
+.nav-item:hover{
+ border-bottom: solid;
+ border-radius: calc();
 }
+
 .btn-toggle {
   top: 50%;
   transform: translateY(-50%);
