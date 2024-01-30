@@ -18,10 +18,10 @@ export default function Course(){
  let id;
  datauser.map((e)=>id=e._id);
     return (
-      <div>
-      <div className="row"> <Nav ><Search>
+      <>
+      <Nav ><Search>
           </Search>
-          </Nav></div>
+          </Nav>
         <div className="container-fluid ">
             <div className="row"  style={{color:'#FFA500'}}>
             {Coursedata.map((e) => (
@@ -57,6 +57,6 @@ export default function Course(){
           </div>
         </div>
         <Footer/>
-      </div>
+      </>
     );
 }

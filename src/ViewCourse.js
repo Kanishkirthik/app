@@ -33,9 +33,8 @@ axios.post("")
 const [StudentName,setStudentName]=useState();
     return (
       <div >
-    <div className="row">
+   
       <Nav />
-    </div>
       <div
         className="container-fluid bg-dark h-100"
         style={{color:'#FFA500'}}

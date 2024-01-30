@@ -27,11 +27,11 @@ useEffect(() => {
 data=Courses;
 
   return (
-    <div>
-    <div className="row ">
+    <div >
+    
         <Nav istrue={islogin}></Nav>
-      </div>
-      <div className="container-fluid">
+
+      <div   className="container-fluid" style={{color:'#FFA500'}}>
         <h4>Learn from 275+ leading universities and companies</h4>
         <div className="row">
             <div className="col-sm-3">
@@ -83,7 +83,8 @@ data=Courses;
           </div>
         </div>
       </div>
-    <Footer/>
+      
+      <Footer/>
     </div>
   );
 }

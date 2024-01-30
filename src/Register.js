@@ -37,9 +37,9 @@ export default function Register() {
     <div
       style={{ color:'#FFA500', width: "auto" }}
     >
-      <div className="row">
+      
         <Nav></Nav>
-      </div>
+  
       <div className="container-fluid">
       <div
         className="row justify-content-center  "

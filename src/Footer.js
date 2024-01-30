@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 export default function Footer(){
     return(
-        <footer  className="conatiner lh-5   bg-dark"  style={{color:'#FFA500'}}>
+        <footer  className="  conatiner-fluid   bg-dark"  style={{color:'#FFA500',mariginBottom:'0px'}}>
     
-            <div className="row " >
-             <div className="col-sm-2 m-2 "style={{color:'#FFA500'}}>
+             <div className="col-sm-2  "style={{color:'#FFA500'}}>
                 
                 <ul   className="p-2 lh-base " style={{listStyle:'none',lineSpacing:'even'}}> 
                     <h3>Section</h3>
@@ -23,11 +22,9 @@ export default function Footer(){
 
                 </ul>
                 </div>
-                <div className="col-sm-8 align-self-center">
+                <div className="col-sm-12 ">
                 <p className="fs-4   text-center  fst-italic">“Education is one thing no one can take away from you.”</p>
                 </div>
-            </div>
-            <div className="row justify-content-center" >
     
              <div className="col text-center ">
     
@@ -48,11 +45,10 @@ export default function Footer(){
 
          
             </div>
-            </div>
-            <div className="row">
+            
+            
                 <div className="col">
                <h6 className="fs-6  text-center "> © 2024 Copyright KK Inc,</h6>
-                    </div>
                     </div>
         </footer>
     );

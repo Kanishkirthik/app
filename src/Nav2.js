@@ -12,7 +12,6 @@ export default function Nav({children}){
 const navigate=useNavigate();
     return (
       <div className=" position-sticky">
-        <div className="row ">
           <div className="col">
             <nav class=" navbar  navbar-expand-md navbar-expand-lg  bg-dark fs-6  " >
               <div class="container-fluid">
@@ -39,8 +38,8 @@ const navigate=useNavigate();
                     <Link className ="nav-link" style={{textDecoration:'none',color:' #FFA500'}} to={'/Course'}>Course</Link>
                     </li>
                   </ul>
-                  
-                  <div className=' col  d-flex justify-content-end ' >
+         
+                  <div className=' col-xxl-10  d-flex justify-content-center   text-center   ' >
                   {children}
                   </div>
                   <div className=' col  d-flex justify-content-end  '>
@@ -68,7 +67,7 @@ const navigate=useNavigate();
             </nav>
           </div>
         </div>
-      </div>
+   
     );
 }
 export { datauser};

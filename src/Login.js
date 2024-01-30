@@ -29,8 +29,8 @@ export default function Login(){
     }
   };
     return (
-      <>
-      <div className="row"><Nav></Nav></div> 
+      <div >
+     <Nav></Nav>
       <div className="container-fluid" style={{color:'#FFA500' ,width:'auto'}}>
        <div
         className="row justify-content-center  "
@@ -78,6 +78,6 @@ export default function Login(){
         </div>
       </div>
       <Footer/>
-</>
+</div>
     );
 }
