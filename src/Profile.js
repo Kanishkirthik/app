@@ -12,39 +12,12 @@ import { auth } from "./firebase";
 let filter = [];
 let MentorCourse=[];
 export default function Profile() {
-  const { username } = useParams();
+
   const navigate = useNavigate();
   const [StateEnrolled, setEnrolled] = useState(false);
   const [StateCompleted, setCompleted] = useState(false);
   const [StateDashBoard, setDashBoard] = useState(false);
-  console.log(username);
-  
-  const [user, setUser] = useState([]);
-  useEffect(() => {
-    async function getsUser() {
-      const response = await axios.get("https://kk-elearn.onrender.com/Profile");
-      setUser(response.data);
-    }
-    getsUser();
-  }, []);
- 
-  console.log(user);
-
-  filter = user.filter((e) => e.Username === username);
-  let role="";
-  
-  filter.map((e)=>role=e.Role);
-  console.log(role);
-  if(role==='Mentor'){
-    console.log("hi")
-  MentorCourse=data.filter((e)=>e.Mentor===username);
- 
-
-  }
-  console.log(MentorCourse);
-  
-
-
+  console.log(auth);
   //console.log(JSON.stringify(filter));
   return (
     <div className="container-fluid">
@@ -168,7 +141,7 @@ export default function Profile() {
             <div className="row justify-content-end p-2">
               <button
                 className="btn  btn-close bg-white "
-                onClick={() => navigate(`/${JSON.stringify(filter)}`)}
+                onClick={() => navigate('/')}
               ></button>
             </div>
             {StateEnrolled && <Enrolled data={e.Enrolled} />}
@@ -178,6 +151,7 @@ export default function Profile() {
         </div>
       ))}
     </div>
-  );
+    );
+    
 }
 export { filter };

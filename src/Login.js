@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import  'bootstrap/dist/js/bootstrap.bundle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
-import axios  from 'axios';
 import {auth,googleAuthProvider} from './firebase'; 
 import Nav from './Nav2';
 import Footer from "./Footer";
@@ -13,8 +12,8 @@ export default function Login(){
   const handleSubmit =async function(e){
     e.preventDefault();
     try{
- await  auth.signInWithEmailAndPassword(UserName, Password);
- console.log('Login successful');
+    await  auth.signInWithEmailAndPassword(UserName, Password);
+    navigate('/');
     }catch(err){
       console.log(err);
     }
@@ -22,8 +21,9 @@ export default function Login(){
   }
   const handleGoogleLogin = async () => {
     try {
-      await auth.signInWithPopup(googleAuthProvider);
+      const user =await auth.signInWithPopup(googleAuthProvider);
       console.log('Google login successful');
+      navigate('/');
     } catch (error) {
       console.error('Google login error:', error.message);
     }

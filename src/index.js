@@ -16,7 +16,6 @@ import Profile from './Profile';
 import Enrolled from './EnrolledCourse';
 import Completed from './Completed';
 import Timer from './Timer';
-import Payment from './Payment';
 import Cert from './Certificate';
 import ViewCourse from './ViewCourse';
 import AdminDashboard from './AdminDashboard';
@@ -35,11 +34,10 @@ root.render(
 <Route path='/Course:id' element={<Course><Filter/></Course>}></Route>
 <Route path='/Register' element={<Register/>}></Route>
 <Route path='/Login' element={<Login/>}></Route>
-<Route path='/Profile/:username' element={<Profile/>}></Route>
+<Route path='/Profile' element={<Profile/>}></Route>
 <Route path='/Enrolled' element={<Enrolled/>}></Route>
 <Route path='/Completed' element={<Completed/>}></Route>
 <Route path='/Certificate' element={<Cert/>}></Route>
-<Route path='/Payment' element={<Payment/>}></Route>
 <Route path='/Timer' element={<Timer/>}></Route>
 <Route path="/ViewCourse/:id"element={<ViewCourse/>}></Route>
 <Route path="/Admin/:username"element={<AdminDashboard/>}></Route>

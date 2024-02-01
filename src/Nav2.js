@@ -2,13 +2,13 @@
 import './index.css'
 import { Link, useNavigate,useParams} from 'react-router-dom';
 import Profile from './Profile';
-import {User} from './App';
+import {auth} from './firebase.js'
 import { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import  'bootstrap/dist/js/bootstrap.bundle';
-let datauser=[];
+
 export default function Nav({children}){
-  datauser=User;
+  console.log(auth.currentUser);
 const navigate=useNavigate();
     return (
       <div className=" position-sticky">
@@ -43,12 +43,12 @@ const navigate=useNavigate();
                   {children}
                   </div>
                   <div className=' col  d-flex justify-content-end  '>
-                  {User.length >0 ?  <div class="dropdown-center text-end  ">
+                  {auth ?  <div class="dropdown-center text-end  ">
                     <a style={{textDecoration:'none',color:' #FFA500'}}
                       className=" dropdown-toggle   "
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
-                      onClick={()=>navigate(`/Profile/${User.map((e)=>e.Username)}`)}
+                      onClick={()=>navigate('/Profile')}
                     >
                  <i class="fs-3 bi bi-person-circle"></i>
                     </a>
@@ -61,7 +61,7 @@ const navigate=useNavigate();
                   </div> :   <Link className='  nav-link       'style={{textDecoration:'none',color:' #FFA500'}}  to={'/Login'}>Login/SignUp </Link>
                    
 }
-                </div>
+                  </div>
                 </div>
               </div>
             </nav>
@@ -70,4 +70,3 @@ const navigate=useNavigate();
    
     );
 }
-export { datauser};

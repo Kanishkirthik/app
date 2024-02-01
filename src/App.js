@@ -8,16 +8,10 @@ import {useEffect, useState } from "react";
 import axios from "axios";
 import Course from "./Course";
 let data=[];
-let User=[];
 function App() {
 
   const {Data}=useParams();
   console.log(Data)
-  const[islogin,setLogin]=useState(false);
-  if(Data){
-   User=JSON.parse(Data);
- //setLogin(true);
-   }
 const [Courses,setCourse]=useState([]);
 useEffect(() => {
  async function getsCourse() {
@@ -29,7 +23,8 @@ data=Courses;
   return (
     <div >
     
-        <Nav istrue={islogin}></Nav>
+     <Nav/>
+      
 
       <div   className="container-fluid" style={{color:'#FFA500'}}>
         <h4>Learn from 275+ leading universities and companies</h4>
@@ -89,5 +84,4 @@ data=Courses;
   );
 }
 export {data};
-export {User};
 export default App;
