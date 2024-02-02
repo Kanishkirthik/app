@@ -4,7 +4,6 @@ import Search from "./Search";
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import  'bootstrap/dist/js/bootstrap.bundle';
-import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import axios from "axios";
 import { data } from "./App";
 import { User } from "./App";
