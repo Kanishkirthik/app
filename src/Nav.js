@@ -6,7 +6,7 @@ import { Link} from 'react-router-dom';
 import Profile from './Profile';
 function CollapsibleExample() {
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+    <Navbar collapseOnSelect expand="lg" >
       <Container>
         <Navbar.Brand></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

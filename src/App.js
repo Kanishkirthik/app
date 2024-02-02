@@ -15,7 +15,7 @@ function App() {
 const [Courses,setCourse]=useState([]);
 useEffect(() => {
  async function getsCourse() {
- const response = await axios.get("http://localhost:3001/Course");
+ const response = await axios.get("https://kk-elearn.onrender.com/Course");
  setCourse(response.data);
  } getsCourse(); }, []);
 data=Courses;
