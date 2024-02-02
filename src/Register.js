@@ -4,29 +4,36 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Nav from "./Nav2";
-
+import {auth} from './firebase'; 
 import Footer from "./Footer";
 export default function Register() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfimPassword] = useState("");
+  const [Photourl, setPhotourl] = useState("");
   const [Role, setRole] = useState("");
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     console.log(username);
     console.log(password);
     console.log(Role);
     if(password===confirmpassword){
+      const userCredential = await auth.createUserWithEmailAndPassword(Email, password);
+      console.log(userCredential);
     axios
-      .post("https://kk-elearn.onrender.com/Register", {
-        Username: username,
+      .post("http://localhost:3001/Register", {
+        Username:username,
+        Email: userCredential.user.email,
+        Uid:userCredential.user.uid,
         Password: password,
         Role:Role,
+        Photourl:Photourl
       })
-      .then((result) => (axios.post("https://kk-elearn.onrender.com/Profile", {Username:result.data.Username,
-      Role:result.data.Role}).then(console.log("inserted")).catch((err)=>console.log(err))))
+      .then((result) => (axios.post("http://localhost:3001/Profile", {Username:result.data.Username,
+      Role:result.data.Role,Photourl:result.data.Photourl}).then(console.log("inserted")).catch((err)=>console.log(err))))
       .catch((err) => console.log(err))
       
     }
@@ -50,16 +57,29 @@ export default function Register() {
          
         >
           <form className="p-3 fs-6" onSubmit={handleSubmit}>
-            <div>
+          <div>
               <label for="username" className="form-label">
-                UserName/Email
+                UserName
               </label>
               <input
-                type="email"
+                type="text"
                 className="form-control rounded-5"
                 id="username"
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter the username"
+                required={true}
+              ></input>
+            </div>
+            <div>
+              <label for="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control rounded-5"
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter the email"
                 required={true}
               ></input>
             </div>
@@ -126,6 +146,19 @@ export default function Register() {
                Mentor
               </label>
             </div>
+            </div>
+            <div>
+              <label for="Photourl" className="form-label">
+              Photo url
+              </label>
+              <input
+                type="url"
+                className="form-control rounded-5 mb-2"
+                id="Photourl"
+                onChange={(e) => setPhotourl(e.target.value)}
+                placeholder="Enter the Photourl"
+                required={true}
+              ></input>
             </div>
             <span></span>
             <div>

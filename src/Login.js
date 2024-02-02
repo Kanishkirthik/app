@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import {auth,googleAuthProvider} from './firebase'; 
 import Nav from './Nav2';
 import Footer from "./Footer";
+import axios from "axios";
 export default function Login(){
   const navigate = useNavigate();
   const [UserName,setUsername]=useState('');
   const [Password,setPassword]=useState('');
+  const [Role, setRole] = useState("");
   const handleSubmit =async function(e){
     e.preventDefault();
     try{
@@ -21,8 +23,20 @@ export default function Login(){
   }
   const handleGoogleLogin = async () => {
     try {
-      const user =await auth.signInWithPopup(googleAuthProvider);
+      const userCredential =await auth.signInWithPopup(googleAuthProvider);
       console.log('Google login successful');
+      let role=prompt("Enter your Role");
+      setRole(role);
+      axios.post("http://localhost:3001/Register", {
+        Username:userCredential.user.displayName,
+        Email: userCredential.user.email,
+        Uid:userCredential.user.uid,
+        Role:Role,
+        Photourl:userCredential.user.photoURL
+      })
+      .then((result) => (axios.post("http://localhost:3001/Profile", {Username:result.data.Username,
+      Role:result.data.Role,Photourl:result.data.Photourl}).then(console.log("inserted")).catch((err)=>console.log(err))))
+      .catch((err) => console.log(err))
       navigate('/');
     } catch (error) {
       console.error('Google login error:', error.message);
