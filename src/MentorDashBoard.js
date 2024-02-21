@@ -1,6 +1,6 @@
 import axios from "axios";
 import './index.css'
-import { filter } from "./Profile";
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 export default function DashBoard(props) {
@@ -25,7 +25,7 @@ export default function DashBoard(props) {
     Level: "",
     Price: "",
   });
-  filter.map((e) => (MentorName = e.Username));
+  //filter.map((e) => (MentorName = e.Username));
   const [Course, setCourse] = useState({
     Name: "",
     Image: "",

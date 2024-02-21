@@ -24,7 +24,7 @@ export default function Register() {
       const userCredential = await auth.createUserWithEmailAndPassword(Email, password);
       console.log(userCredential);
     axios
-      .post("https://kk-elearn.onrender.com/Register", {
+      .post("http://localhost:3001/Register", {
         Username:username,
         Email: userCredential.user.email,
         Uid:userCredential.user.uid,
@@ -32,7 +32,7 @@ export default function Register() {
         Role:Role,
         Photourl:Photourl
       })
-      .then((result) => (axios.post("https://kk-elearn.onrender.com/Profile", {Username:result.data.Username,
+      .then((result) => (axios.post("http://localhost:3001/Profile", {Username:result.data.Username,
       Role:result.data.Role,Photourl:result.data.Photourl}).then(console.log("inserted")).catch((err)=>console.log(err))))
       .catch((err) => console.log(err))
       

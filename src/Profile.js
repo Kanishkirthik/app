@@ -9,19 +9,26 @@ import axios from "axios";
 import { useNavigate, useParams,Link } from "react-router-dom";
 import { data } from "./App";
 import { auth } from "./firebase";
-let filter = [];
+
 let MentorCourse=[];
 export default function Profile() {
+  const [Profile,setProfile]=useState([]);
 
   const navigate = useNavigate();
   const [StateEnrolled, setEnrolled] = useState(false);
   const [StateCompleted, setCompleted] = useState(false);
   const [StateDashBoard, setDashBoard] = useState(false);
   console.log(auth);
-  //console.log(JSON.stringify(filter));
+   useEffect(() => {
+    async function getsProfile() {
+    const response = await axios.get("http://localhost:3001/Profile");
+    setProfile(response.data);
+    } getsProfile(); }, []);
+    //Profile.filter((e)=>e.Uid==auth._delegate.currentUser.uid)
+  console.log(auth._delegate.currentUser);
   return (
     <div className="container-fluid">
-      {filter.map((e) => (
+      {Profile.map((e) => (
         <div
           className="row  "
           style={{ minHeight: "calc(100vh)" }}
@@ -32,9 +39,9 @@ export default function Profile() {
               style={{  width: "auto" }}
             >
               <img
-                src={Dp}
+                src={e.Photourl}
                 alt="..."
-                className=" align-self-center  card-img-top w-50 h-10 rounded-pill"
+                className=" align-self-center  card-img-top w-auto h-auto rounded-pill"
               />
               <h5 class="card-title text-center  text-white fs-6">
                 {e.Username}
@@ -154,4 +161,4 @@ export default function Profile() {
     );
     
 }
-export { filter };
+

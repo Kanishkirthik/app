@@ -25,17 +25,13 @@ export default function Login(){
     try {
       const userCredential =await auth.signInWithPopup(googleAuthProvider);
       console.log('Google login successful');
-      let role= await prompt("Enter your Role");
-      setRole(role);
-      axios.post("https://kk-elearn.onrender.com/Register", {
+      axios.post("http://localhost:3001/Register", {
         Username:userCredential.user.displayName,
         Email: userCredential.user.email,
         Uid:userCredential.user.uid,
-        Role:Role,
         Photourl:userCredential.user.photoURL
-      })
-      .then((result) => (axios.post("https://kk-elearn.onrender.com/Profile", {Username:result.data.Username,
-      Role:result.data.Role,Photourl:result.data.Photourl}).then(console.log("inserted")).catch((err)=>console.log(err))))
+      }).then((result) => (axios.post("http://localhost:3001/Profile",{Username:result.data.Username,Uid:result.data.Uid,
+       Photourl:result.data.Photourl}).then(console.log("inserted")).catch((err)=>console.log(err))))
       .catch((err) => console.log(err))
       navigate('/');
     } catch (error) {
