@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 export default function Footer(){
     return(
-        <footer  className="  conatiner-fluid   bg-dark"  style={{color:'#FFA500',mariginBottom:'0px'}}>
+        <div  className="  conatiner-fluid   bg-dark"  style={{color:'#FFA500',mariginTop:'98vh'}}>
     
              <div className="col-sm-2  "style={{color:'#FFA500'}}>
                 
@@ -50,6 +50,6 @@ export default function Footer(){
                 <div className="col">
                <h6 className="fs-6  text-center "> © 2024 Copyright KK Inc,</h6>
                     </div>
-        </footer>
+        </div>
     );
 }

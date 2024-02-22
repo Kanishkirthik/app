@@ -43,7 +43,7 @@ const navigate=useNavigate();
                   {children}
                   </div>
                   <div className=' col  d-flex justify-content-end  '>
-                  {auth ?  <div class="dropdown-center text-end  ">
+                  {auth.currentUser!=null ?  <div class="dropdown-center text-end  ">
                     <a style={{textDecoration:'none',color:' #FFA500'}}
                       className=" dropdown-toggle   "
                       data-bs-toggle="dropdown"

@@ -20,7 +20,7 @@ export default function Course(){
           </Nav>
         <div className="container-fluid ">
             <div className="row"  style={{color:'#FFA500'}}>
-            {/* {Coursedata.map((e) => (
+            {data.map((e) => (
               <div className="col-sm-3 col-md-5  col-xl-4 col-xxl-3 col-lg-4 fs-6 mt-2 mb-2  "   style={{color:'#FFA500'}}>
                 <div class="  shadow card   bg-dark  " style={{ width: "auto" }}>
                   <img src={e.Image} class="card-img-top" alt="..." width={'auto'}  />
@@ -49,7 +49,7 @@ export default function Course(){
                   </div>
                 </div>
               </div>
-            ))} */}
+            ))}
           </div>
         </div>
         <Footer/>

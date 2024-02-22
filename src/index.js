@@ -38,7 +38,7 @@ root.render(
 <Route path='/Timer' element={<Timer/>}></Route>
 <Route path="/ViewCourse/:id"element={<ViewCourse/>}></Route>
 <Route path="/Admin/:username"element={<AdminDashboard/>}></Route>
-<Route path="/Cart/:id"element={<AddtoCart/>}></Route>
+<Route path="/Cart"element={<AddtoCart/>}></Route>
 <Route path="/Checkouts"element={<Checkouts/>}></Route>
 
    </Routes>

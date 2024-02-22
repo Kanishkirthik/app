@@ -1,14 +1,33 @@
-import axios from "axios";
-import './index.css'
 
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import './index.css'
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/js/bootstrap.bundle";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Dp from "./717821p224_photo .jpg";
+import Enrolled from "./EnrolledCourse";
+import Completed from "./Completed";
+import axios from "axios";
+import { useNavigate, useParams,Link } from "react-router-dom";
+import { data } from "./App";
+import { auth } from "./firebase";
 export default function DashBoard(props) {
   const [Create, setCreate] = useState(false);
   const [Upadte, setUpdate] = useState(false);
   const [Delete, setDelete] = useState(false);
   const [Search, setSearch] = useState();
+  const [Profile,setProfile]=useState([]);
   const [Searched, setSearched] = useState([]);
+   useEffect(() => {
+    async function getsProfile() {
+    const response = await axios.get("http://localhost:3001/Profile");
+    setProfile(response.data);
+    } getsProfile(); }, []);
+    let Filter=[]
+    if(auth.currentUser!=null){
+    Filter=Profile.filter((e)=>e.Uid===auth._delegate.currentUser.uid)
+    }else{
+      alert("Please Login");
+    }
   let MentorName = "";
   let Courses = [];
   Courses = props.Mentor;
@@ -25,7 +44,7 @@ export default function DashBoard(props) {
     Level: "",
     Price: "",
   });
-  //filter.map((e) => (MentorName = e.Username));
+  Filter.map((e) => (MentorName = e.Username));
   const [Course, setCourse] = useState({
     Name: "",
     Image: "",
@@ -188,23 +207,23 @@ export default function DashBoard(props) {
 
   console.log(Searched.length);
   return (
-    <div className="container-fluid text-white">
+    <div className="container-fluid " style={{color:'#FFA500'}}>
       <div className="row">
-        <h3 className="fst-italic text-dark ">
+        <h3 className="fst-italic  "style={{color:'#FFA500'}}>
           "Teachers have three loves: love of learning, love of learners, and
           the love of bringing the first two loves together."
         </h3>
       </div>
       <div className="row">
 
-        <div class="btn-group text-white bg-black " role="group" aria-label="Basic outlined example">
+        <div class="btn-group  bg-black " role="group" aria-label="Basic outlined example">
           <button type="button " class="btn  nav-item" onClick={()=>{
             setCreate(true);
             setUpdate(false);
             setDelete(false);
             setSearched("");
           }}
-          style={{backgroundColor:'black',color:'white'}}>
+          style={{backgroundColor:'black',color:'#FFA500'}}>
             Create Your Course
           </button>
           <button type="button" class="btn  nav-item"  onClick={()=>{
@@ -212,7 +231,7 @@ export default function DashBoard(props) {
             setUpdate(true);
             setDelete(false);
             setSearched("");
-          }} style={{backgroundColor:'black',color:'white'}}>
+          }} style={{backgroundColor:'black',color:'#FFA500'}}>
             Update Your Course
           </button>
           <button type="button" class="btn nav-item " onClick={()=>{
@@ -220,7 +239,7 @@ export default function DashBoard(props) {
             setUpdate(false);
             setDelete(true);
             setSearched("");
-          }} style={{backgroundColor:'black' ,color:'white'}}> 
+          }} style={{backgroundColor:'black',color:'#FFA500'}}> 
            Delete
           </button>
         </div>
@@ -229,7 +248,7 @@ export default function DashBoard(props) {
       {Create && (
         <div className="row  mt-3" style={{ height: "auto", width: "auto" }}>
           <div
-            className="  text-white col  bg-dark  rounded-2 "
+            className="  col  bg-dark  rounded-2 "
           
           >
             <div
@@ -238,7 +257,7 @@ export default function DashBoard(props) {
             >
               <div  className="p-3 justify-content-center " >
               <form
-          
+               style={{color:'#FFA500'}}
                 onSubmit={handleSubmit}
                 className=" fs-6 col-md-6 col-lg-5 col-xl-4 col-xxl-3 col-sm-8 align-self-center"
               >
@@ -440,10 +459,11 @@ export default function DashBoard(props) {
                 </div>
                 <div className="mt-2">
                   <button
-                    className="btn text-white  w-100 rounded-2 mb-2"
-                    style={{ backgroundColor: "black" }}
+                    className="btn   w-100 rounded-2 mb-2"
+                    style={{ backgroundColor: "black" ,color:'#FFA500'}}
                     type="submit"
                     value={"Create"}
+                    
                   >
                     Create
                   </button>
@@ -455,7 +475,7 @@ export default function DashBoard(props) {
         </div>
       )}
       {Upadte && (
-        <div className="row mt-3">
+        <div className="row mt-3" style={{color:'#FFA500'}}>
           <div className="col">
             <form class="d-flex" role="search" onSubmit={handleSearch}>
               <input
@@ -465,7 +485,7 @@ export default function DashBoard(props) {
                 aria-label="Search"
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button class="btn bg-black text-white " type="submit">
+              <button class="btn bg-black  " type="submit" style={{color:'#FFA500'}}>
                 Search
               </button>
             </form>
@@ -483,7 +503,7 @@ export default function DashBoard(props) {
                 aria-label="Search"
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button class="btn" type="submit">
+              <button class="btn" type="submit" style={{backgroundColor:"black",color:'#FFA500'}}>
                 Search
               </button>
             </form>
@@ -493,19 +513,19 @@ export default function DashBoard(props) {
         }
     
       {Searched.length > 0 && (
-        <div className="row justify-content-center ">
+        <div className="row justify-content-center " style={{color:'#FFA500'}}>
           <div className="col-sm-3 col-md-3   rounded-4 ">
             {Searched.map((e) => (
               <div
-                class=" shadow card  mt-3 text-white "
+                class=" shadow card  mt-3  "
                 style={{ width: "auto" }}
               >
                 <img src={e.Image} class="card-img-top" alt="..." />
                 <div
-                  className=" card-body text-white "
+                  className=" card-body  "
                   style={{ backgroundColor: "#526D82" }}
                 >
-                  <h5 className="card-title text-white ">{e.Name}</h5>
+                  <h5 className="card-title text ">{e.Name}</h5>
                   <h6 className="text-end ">
                     <i class="bi bi-currency-rupee"></i>
                     {e.Price}
@@ -522,7 +542,7 @@ export default function DashBoard(props) {
                     style={{ backgroundColor: "#27374D" }}
                   >
                     <Link
-                      className=" text-decoration-none text-center text-white"
+                      className=" text-decoration-none text-center text"
                       to={`/ViewCourse/${e._id}`}
                     >
                       {" "}
@@ -530,7 +550,7 @@ export default function DashBoard(props) {
                     </Link>
                   </div>
                   {Delete &&(
-                    <button style={{ backgroundColor: "black" }}  className="btn text-white w-100 mt-2" onClick={handelDelete}>Delete</button>
+                    <button style={{ backgroundColor: "black",color:'#FFA500'}}  className="btn w-100 mt-2" onClick={handelDelete}>Delete</button>
                   )}
                 </div>
               </div>
@@ -838,7 +858,7 @@ export default function DashBoard(props) {
                         </div>
                         <div className="col-sm-4  text-center ">
                           <button
-                            className="btn text-white  w-100 rounded-5 mb-2"
+                            className="btn text  w-100 rounded-5 mb-2"
                             style={{ backgroundColor: "#27374D" }}
                             type="submit"
                             value={"Generate Fields"}
@@ -857,7 +877,7 @@ export default function DashBoard(props) {
         </div>
     )}
       {generate && (
-        <form
+        <form 
           className="p-3 fs-6 col-md-6 col-lg-5 col-xl-4 col-xxl-3 col-sm-8  align-self-center "
           onSubmit={handleupdate}
         >
@@ -1081,7 +1101,7 @@ export default function DashBoard(props) {
           )}
           <div className="mt-2">
             <button
-              className="btn text-white  w-100 rounded-5 mb-2"
+              className="btn text  w-100 rounded-5 mb-2"
               style={{ backgroundColor: "#27374D" }}
               type="submit"
               value={"update"}
