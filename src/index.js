@@ -5,7 +5,6 @@ import App from './App';
 import Filter from './Filter2'
 import Course from './Course';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import {Route,Routes,BrowserRouter} from 'react-router-dom'
 import Register from './Register';
 import Login from './Login';
