@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import "bootstrap/dist/js/bootstrap.bundle";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth } from './firebase';
 import Nav from "./Nav2";
-import {auth} from './firebase'; 
-import Footer from "./Footer";
 export default function Register() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -24,7 +23,7 @@ export default function Register() {
       const userCredential = await auth.createUserWithEmailAndPassword(Email, password);
       console.log(userCredential);
     axios
-      .post("http://localhost:3001/Register", {
+      .post("https://kk-elearn.onrender.com/Register", {
         Username:username,
         Email: userCredential.user.email,
         Uid:userCredential.user.uid,
@@ -32,7 +31,7 @@ export default function Register() {
         Role:Role,
         Photourl:Photourl
       })
-      .then((result) => (axios.post("http://localhost:3001/Profile", {Username:result.data.Username,
+      .then((result) => (axios.post("https://kk-elearn.onrender.com//Profile", {Username:result.data.Username,
       Role:result.data.Role,Photourl:result.data.Photourl}).then(console.log("inserted")).catch((err)=>console.log(err))))
       .catch((err) => console.log(err))
       
@@ -47,13 +46,13 @@ export default function Register() {
       
         <Nav></Nav>
   
-      <div className="container-fluid">
+      <div className="container-fluid app-container">
       <div
         className="row justify-content-center  "
-        style={{ height: "98vh", width: "auto" }}
+        style={{  width: "auto" }}
       >
         <div
-          className=" shadow  col-md-3 col-sm-3 align-self-center  rounded-4 bg-dark"
+          className=" shadow   card col-md-3 col-sm-3 align-self-center  rounded-4 text-white "
          
         >
           <form className="p-3 fs-6" onSubmit={handleSubmit}>
@@ -190,7 +189,6 @@ export default function Register() {
         </div>
       </div>
       </div>
-      <Footer />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 
-import { data } from "./App";
 import { Link } from "react-router-dom";
+import { data } from "./App";
 export default function Enrolled(){
     return (
         <>
@@ -8,7 +8,7 @@ export default function Enrolled(){
       <h1>Enrolled Courses</h1>
       {data.map((e) => (
               <div className="col-sm-6 col-lg-4 col-xxl-3  col-md-5  rounded-4 " style={{color:'#FFA500'}}>
-                <div class=" shadow card  text  bg-dark " style={{ width: "auto" ,color:'#FFA500'}}>
+                <div class=" shadow card  text   " style={{ width: "auto" ,color:'#FFA500'}}>
                   <img src={e.Image} class="card-img-top" alt="..." />
                   <div className=" card-body text " >
                     <h5 className="card-title text ">{e.Name}</h5>

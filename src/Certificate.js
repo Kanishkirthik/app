@@ -1,10 +1,10 @@
 
-import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from 'react-component-export-image';
-import React, { useRef } from 'react';
-import certificate from'./Certificate.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useRef } from 'react';
+import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from 'react-component-export-image';
+import certificate from './Certificate.png';
 
-import { useState ,useEffect} from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Cert(){
   const [width,setWidth]=useState(window.innerWidth);

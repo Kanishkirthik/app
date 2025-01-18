@@ -1,6 +1,6 @@
-import React  from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import  'bootstrap/dist/js/bootstrap.bundle';
+import 'bootstrap/dist/js/bootstrap.bundle';
+import React from "react";
 import './index.css';
 export default function Filter(){
 return (

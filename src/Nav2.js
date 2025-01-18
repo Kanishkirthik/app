@@ -1,19 +1,18 @@
 
-import './index.css'
-import { Link, useNavigate,useParams} from 'react-router-dom';
-import Profile from './Profile';
-import {auth} from './firebase.js'
-import { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import  'bootstrap/dist/js/bootstrap.bundle';
-
+import 'bootstrap/dist/js/bootstrap.bundle';
+import { Link, useNavigate } from 'react-router-dom';
+import Image from './Favicon.webp';
+import Profile from './Profile';
+import { auth } from './firebase.js';
+import './index.css';
 export default function Nav({children}){
   console.log(auth.currentUser);
 const navigate=useNavigate();
     return (
       <div className=" position-sticky">
           <div className="col">
-            <nav class=" navbar  navbar-expand-md navbar-expand-lg  bg-dark fs-6  " >
+            <nav class=" navbar  navbar-expand-md navbar-expand-lg   fs-6  " >
               <div class="container-fluid">
                 <button
                   class="navbar-toggler"
@@ -32,14 +31,14 @@ const navigate=useNavigate();
                 >
                   <ul class="navbar-nav   ">
                     <li class="nav-item  ">
-                    <Link className ="nav-link  active "  aria-current="page" style={{textDecoration:'none',color:' #FFA500'}} to={'/'}>Home</Link>
+                    <Link className ="nav-link  active "  aria-current="page" style={{textDecoration:'none',color:' #FFA500'}} to={'/'}><img src={Image} width={'30px'} height={'30px'}></img></Link>
                     </li>
                     <li class="nav-item ml-3">
                     <Link className ="nav-link" style={{textDecoration:'none',color:' #FFA500'}} to={'/Course'}>Course</Link>
                     </li>
                   </ul>
          
-                  <div className=' col-xxl-10  d-flex justify-content-center   text-center   ' >
+                  <div className=' col-xxl-10  d-flex  gap  text-center   ' >
                   {children}
                   </div>
                   <div className=' col  d-flex justify-content-end  '>

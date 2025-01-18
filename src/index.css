@@ -6,11 +6,78 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height:100%;
 }
 .rating {
   display: inline-block;
 }
+.title{
+  text-align: center;
+  font-size: x-large;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  color:  darkslategray;
+  text-transform:capitalize;
+  box-shadow: #FFA500;
+  box-sizing: calc();
+}
 
+input{
+  border-radius: 10px;
+  border-style: none;
+  height: 50px;
+  color:  darkslategray;
+  background-color:wheat;
+  padding: 30px;
+  font-weight: 200;
+  font-family: 'Times New Roman', Times, serif;
+}
+textarea{
+  color:  darkslategray;
+  background-color:wheat;
+  padding: 30px;
+  font-weight: 200;
+  width: 100%;
+  border-radius: 10px;
+  border-style: none;
+  margin-top: 5px;
+}
+
+textarea::placeholder{
+  color:darkslategray;
+  text-align: center;
+}
+
+input::placeholder{
+  color:darkslategray;
+  text-align: center;
+}
+
+
+.list{
+  list-style: inside;
+  list-style-type: square;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  font-family: 'Times New Roman', Times, serif;
+  padding: 0;
+}
+.list li{
+  margin: 3px;
+  text-align: justify;
+}
+.ben{
+  padding: 5px;
+}
+
+.ben .card{
+  background-color:darkslategray;
+  color: wheat;
+}
+.app-container{
+  background-color:wheat;
+}
 .rating input {
   display: none;
 }
@@ -18,22 +85,84 @@ body {
 .rating label {
   float: right;
   cursor: pointer;
-  color: #ccc;
+  color:darkolivegreen;
   transition: color 0.3s;
 }
-
-.rating label:before {
-  content: '\2605';
-  font-size: 15px;
+.custom-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+  gap: 10px; /* Adds spacing between buttons */
+}
+ .custom-btn  .form button{
+  justify-self: center;
+  width: 100%;
 }
 
-.rating input:checked ~ label,
-.rating label:hover,
-.rating label:hover ~ label {
-  color: goldenrod;
-  transition: color 0.3s;
+.custom-btn button {
+  font-weight:bold;
+  width: 100px;
+  height: 40px; /* Ensures consistent height */
+  background-color: #FFA500;
+  color:  darkslategray; /* Ensures contrast */
+  font-size: 16px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  border: none;
+  position: relative; /* Allows positioning of pseudo-elements */
+  overflow: hidden; /* Keeps pseudo-elements inside the button */
+  cursor: pointer; /* Changes cursor to pointer for interactivity */
+  box-shadow: 0 4px 6px rgba(255, 165, 0, 0.5); /* Softer shadow */
+  transition: transform 0.2s ease;
+  box-shadow: 0.2s ease;
+  background :0.2s ease;
 }
 
+.custom-btn button:hover {
+  transform: translateY(-3px); /* Adds a slight lift on hover */
+  box-shadow: 6px 6px 10px rgba(255, 165, 0, 0.5); /* Deeper shadow */
+}
+
+.custom-btn button:active {
+  transform: translateY(2px); /* Slight press-down effect */
+  background: linear-gradient(10deg, #FFA500, #FF8C00); /* Subtle gradient */
+  box-shadow: 3px 3px 6px rgba(255, 165, 0, 0.5); /* Reduced shadow */
+}
+
+.custom-btn button:after {
+  content: ""; /* Ensures the pseudo-element renders */
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FFA500; /* Adds a subtle overlay */
+  opacity: 0;
+  transition: opacity 0.8s;
+}
+
+.custom-btn button:focus {
+  outline: 2px solid #FF8C00; /* Visible focus for accessibility */
+  outline-offset: 2px;
+}
+
+.custom-btn button:active:after {
+  opacity: 1;
+}
+
+.row-form{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+.row-form .title{
+  margin: 10px;
+  box-shadow: #FF8C00;
+}
 *{
   scroll-behavior: smooth;
 }
@@ -49,9 +178,34 @@ code {
  
   text-justify: initial;
 }
-
+.feed-form{
+  color:  #FF8C00;
+}
+.col-form{
+  background-color: darkslategray;
+  padding: 30px;
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: center;
+  border-radius: 10px;
+}
+.card-body{
+  text-align: justify;
+}
+.video{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: darkslategray;
+  color: #FFA500;
+  padding: 10px;
+}
+.card{
+  background-color: darkslategray;
+}
 .navbar{
   color: white !important;
+  background-color:darkslategray;
 }
 .nav_item{
   background-color: white;
@@ -66,4 +220,23 @@ code {
 .btn-toggle {
   top: 50%;
   transform: translateY(-50%);
+}
+.feed-form h5{
+  padding: 2px;
+  text-shadow: #FF8C00;
+  text-align: center;
+}
+.feed-form .feed-head{
+  background-color:  burlywood;
+  color:darkslategray;
+}
+.feed-form .card-title{
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  font-size: medium;
+  color:white
+}
+.ctn{
+  background-color:  darkslategrey;
 }

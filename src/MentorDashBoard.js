@@ -1,36 +1,71 @@
 
-import './index.css'
-import React, { useState, useEffect } from "react";
-import "bootstrap/dist/js/bootstrap.bundle";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Dp from "./717821p224_photo .jpg";
-import Enrolled from "./EnrolledCourse";
-import Completed from "./Completed";
 import axios from "axios";
-import { useNavigate, useParams,Link } from "react-router-dom";
-import { data } from "./App";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle";
+import React, { useEffect, useState } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "./firebase";
-export default function DashBoard(props) {
+import './index.css';
+export default function DashBoard() {
+  const [MentorCourse, setMentorCourse] = useState([]);
   const [Create, setCreate] = useState(false);
   const [Upadte, setUpdate] = useState(false);
   const [Delete, setDelete] = useState(false);
   const [Search, setSearch] = useState();
-  const [Profile,setProfile]=useState([]);
+  const [Profile, setProfile] = useState([]);
   const [Searched, setSearched] = useState([]);
-   useEffect(() => {
-    async function getsProfile() {
-    const response = await axios.get("http://localhost:3001/Profile");
-    setProfile(response.data);
-    } getsProfile(); }, []);
-    let Filter=[]
-    if(auth.currentUser!=null){
-    Filter=Profile.filter((e)=>e.Uid===auth._delegate.currentUser.uid)
-    }else{
-      alert("Please Login");
+
+  const [Token, setToken] = useState(sessionStorage.getItem("token"));
+  if (!Token) {
+    setToken(sessionStorage.getItem("token"));
+  }
+  useEffect(() => {
+    async function getsCourse() {
+      const response = await axios.get("https://kk-elearn.onrender.com/MenCourse", {
+        params: { Username: auth.currentUser.displayName }, // Include data in the body
+        headers: {
+          Authorization: `Bearer ${Token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data);
+      setMentorCourse(response.data);
+
+    } getsCourse();
+  }, []);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    async function getProfile() {
+      try {
+
+        const response = await axios.get(
+          "https://kk-elearn.onrender.com/Profile",
+          {
+            params: { Username: auth.currentUser.displayName }, // Pass query parameters here
+            headers: {
+              Authorization: `Bearer ${Token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response.data);
+        setProfile(response.data); // Update profile state
+
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        alert("Failed to fetch profile. Please try again."); // Replace with better UI feedback if possible
+      }
     }
+
+    getProfile(); // Call the async function
+  }, []); // Incl
+
+
   let MentorName = "";
-  let Courses = [];
-  Courses = props.Mentor;
+
   const [updateCheck, setChecked] = useState({
     Name: "",
     Image: "",
@@ -44,7 +79,7 @@ export default function DashBoard(props) {
     Level: "",
     Price: "",
   });
-  Filter.map((e) => (MentorName = e.Username));
+
   const [Course, setCourse] = useState({
     Name: "",
     Image: "",
@@ -72,118 +107,177 @@ export default function DashBoard(props) {
     Price: "",
   });
   let id = "";
-  let handelDelete=function(){
+  let handelDelete = function () {
     Searched.map((e) => (id = e._id));
-    axios.delete(`https://kk-elearn.onrender.com/Course/${id}`).then(()=>console.log("deleted")).catch((err)=>console.log(err));
+    auth.currentUser.getIdToken(true)
+    axios.delete(`https://kk-elearn.onrender.com/Course/${id}`, {
+      headers: {
+        Authorization: `Bearer ${Token}`,
+        "Content-Type": "application/json",
+      },
+    }).then(() => console.log("deleted")).catch((err) => console.log(err));
   }
-  let handleupdate = function(e) {
+  let handleupdate = function (e) {
     e.preventDefault();
     Searched.map((e) => (id = e._id));
-    if(Updatedata.Name.length>0){
-    axios
-      .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-        Name: Updatedata.Name
-      })
-      .then((result) => console.log())
-      .catch((error) => console.log());
-    }
-    if(Updatedata.Image.length>0){
+    if (Updatedata.Name.length > 0) {
       axios
         .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-          Image: Updatedata.Image
+          Name: Updatedata.Name
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
         })
         .then((result) => console.log())
         .catch((error) => console.log());
-      }
-      if(Updatedata.Des.length>0){
-        axios
-          .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-           Des : Updatedata.Des
-          })
-          .then((result) => console.log())
-          .catch((error) => console.log());
-        }
-        if(Updatedata.M1Name.length>0){
-          axios
-            .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-              M1Name: Updatedata.M1Name
-            })
-            .then((result) => console.log())
-            .catch((error) => console.log());
-          }
-          if(Updatedata.M2Name.length>0){
-            axios
-              .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-                M2Name: Updatedata.M2Name
-              })
-              .then((result) => console.log())
-              .catch((error) => console.log());
-            }
-            if(Updatedata.M3Name.length>0){
-              axios
-                .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-                  M3Name: Updatedata.M3Name
-                })
-                .then((result) => console.log())
-                .catch((error) => console.log());
-              }
-              if(Updatedata.M1Video.length>0){
-                axios
-                  .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-                    M1Video: Updatedata.M1Video
-                  })
-                  .then((result) => console.log())
-                  .catch((error) => console.log());
-                }if(Updatedata.M2Video.length>0){
-                  axios
-                    .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-                      M2Video: Updatedata.M2Video
-                    })
-                    .then((result) => console.log())
-                    .catch((error) => console.log());
-                  }
-                  if(Updatedata.M3Video.length>0){
-                    axios
-                      .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-                        M3Video: Updatedata.M3Video
-                      })
-                      .then((result) => console.log())
-                      .catch((error) => console.log());
-                    }
-                    if(Updatedata.Level.length>0){
-                      axios
-                        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-                          Level: Updatedata.Level
-                        })
-                        .then((result) => console.log())
-                        .catch((error) => console.log());
-                      }
-                      if(Updatedata.Price.length>0){
-                        axios
-                          .put(`https://kk-elearn.onrender.com/Course/${id}`, {
-                            Price: Updatedata.Price
-                          })
-                          .then((result) => console.log())
-                          .catch((error) => console.log());
-                        }
+    }
+    if (Updatedata.Image.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course${id}`, {
+          Image: Updatedata.Image
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    }
+    if (Updatedata.Des.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course${id}`, {
+          Des: Updatedata.Des
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    }
+    if (Updatedata.M1Name.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
+          M1Name: Updatedata.M1Name
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    }
+    if (Updatedata.M2Name.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
+          M2Name: Updatedata.M2Name
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    }
+    if (Updatedata.M3Name.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
+          M3Name: Updatedata.M3Name
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    }
+    if (Updatedata.M1Video.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
+          M1Video: Updatedata.M1Video
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    } if (Updatedata.M2Video.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
+          M2Video: Updatedata.M2Video
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    }
+    if (Updatedata.M3Video.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
+          M3Video: Updatedata.M3Video
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    }
+    if (Updatedata.Level.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
+          Level: Updatedata.Level
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    }
+    if (Updatedata.Price.length > 0) {
+      axios
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
+          Price: Updatedata.Price
+        }, {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((result) => console.log())
+        .catch((error) => console.log());
+    }
   };
 
-  let handleSearch = function(e) {
+  let handleSearch = function (e) {
     e.preventDefault();
-    console.log(Search);
-    setSearched(Courses.filter((e) => e.Name === Search));
-
-    //console.log(Searched.length);
+    let Data=MentorCourse.filter((res)=>res.Name.toLowerCase() === Search.toLowerCase());
+    setSearched(Data);
   };
+  
   const [generate, setgenerate] = useState(false);
-  let handleupdatecheck = function(e) {
+  let handleupdatecheck = function (e) {
     e.preventDefault();
     if (!generate) setgenerate(true);
     else setgenerate(false);
   };
 
-  let handleSubmit = function(E) {
-    //filter.map((e) => (MentorName = e.Username));
+  let handleSubmit = function (E) {
     console.log(MentorName);
     E.preventDefault();
     axios
@@ -200,16 +294,20 @@ export default function DashBoard(props) {
         Level: Course.Level,
         Price: Course.Price,
         Mentor: MentorName,
+      }, {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+          "Content-Type": "application/json",
+        },
       })
-      .then((result) => console.log())
-      .catch((error) => console.log());
+      .then((result) => console.log(result))
+      .catch((error) => console.log(error));
   };
 
-  console.log(Searched.length);
   return (
-    <div className="container-fluid " style={{color:'#FFA500'}}>
+    <div className="container-fluid  ctn" style={{ color: '#FFA500' }}>
       <div className="row">
-        <h3 className="fst-italic  "style={{color:'#FFA500'}}>
+        <h3 className="fst-italic  " style={{ color: '#FFA500' }}>
           "Teachers have three loves: love of learning, love of learners, and
           the love of bringing the first two loves together."
         </h3>
@@ -217,30 +315,30 @@ export default function DashBoard(props) {
       <div className="row">
 
         <div class="btn-group  bg-black " role="group" aria-label="Basic outlined example">
-          <button type="button " class="btn  nav-item" onClick={()=>{
+          <button type="button " class="btn  nav-item" onClick={() => {
             setCreate(true);
             setUpdate(false);
             setDelete(false);
             setSearched("");
           }}
-          style={{backgroundColor:'black',color:'#FFA500'}}>
+            style={{ backgroundColor: 'black', color: '#FFA500' }}>
             Create Your Course
           </button>
-          <button type="button" class="btn  nav-item"  onClick={()=>{
+          <button type="button" class="btn  nav-item" onClick={() => {
             setCreate(false);
             setUpdate(true);
             setDelete(false);
             setSearched("");
-          }} style={{backgroundColor:'black',color:'#FFA500'}}>
+          }} style={{ backgroundColor: 'black', color: '#FFA500' }}>
             Update Your Course
           </button>
-          <button type="button" class="btn nav-item " onClick={()=>{
+          <button type="button" class="btn nav-item " onClick={() => {
             setCreate(false);
             setUpdate(false);
             setDelete(true);
             setSearched("");
-          }} style={{backgroundColor:'black',color:'#FFA500'}}> 
-           Delete
+          }} style={{ backgroundColor: 'black', color: '#FFA500' }}>
+            Delete
           </button>
         </div>
       </div>
@@ -248,234 +346,234 @@ export default function DashBoard(props) {
       {Create && (
         <div className="row  mt-3" style={{ height: "auto", width: "auto" }}>
           <div
-            className="  col  bg-dark  rounded-2 "
-          
+            className="  col  rounded-2 "
+
           >
             <div
               clasName="row r"
               style={{ height: "auto", width: "auto" }}
             >
-              <div  className="p-3 justify-content-center " >
-              <form
-               style={{color:'#FFA500'}}
-                onSubmit={handleSubmit}
-                className=" fs-6 col-md-6 col-lg-5 col-xl-4 col-xxl-3 col-sm-8 align-self-center"
-              >
-                <div>
-                  <label for="CourseName" className="form-label">
-                    Course Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control rounded-2"
-                    id="CourseName"
-                    placeholder="Enter the Course Name"
-                    required={true}
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        Name: e.target.value,
-                      });
-                    }}
-                  ></input>
-                </div>
-                <div>
-                  <label for="ImageUrl" className="form-label">
-                    Image Url
-                  </label>
-                  <input
-                    type="url"
-                    className="form-control rounded-2"
-                    id="ImageUrl"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        Image: e.target.value,
-                      });
-                    }}
-                    placeholder="Enter the Image Url"
-                    required={true}
-                  ></input>
-                </div>
-                <div class="mb-3">
-                  <label for="Description" class="form-label">
-                    Description
-                  </label>
-                  <textarea
-                    class="form-control"
-                    id="Description"
-                    rows="3"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        Des: e.target.value,
-                      });
-                    }}
-                  ></textarea>
-                </div>
-                <div>
-                  <label for="M1Name" className="form-label">
-                    Module 1 Title
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control rounded-2"
-                    id="M1Name"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        M1Name: e.target.value,
-                      });
-                    }}
-                    placeholder="Enter the Module 1 Title"
-                    required={true}
-                  ></input>
-                </div>
-                <div>
-                  <label for="M2Name" className="form-label">
-                    Module 2 Title
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control rounded-2"
-                    id="M2Name"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        M2Name: e.target.value,
-                      });
-                    }}
-                    placeholder="Enter the Module 2 Title "
-                    required={true}
-                  ></input>
-                </div>
-                <div>
-                  <label for="M3Name" className="form-label">
-                    Module 3 Title
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control rounded-2"
-                    id="M3Name"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        M3Name: e.target.value,
-                      });
-                    }}
-                    placeholder="Enter the Module 3 Title"
-                    required={true}
-                  ></input>
-                </div>
-                <div>
-                  <label for="M1Video" className="form-label">
-                    Module 1 Video
-                  </label>
-                  <input
-                    type="url"
-                    className="form-control rounded-2"
-                    id="M1Video"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        M1Video: e.target.value,
-                      });
-                    }}
-                    placeholder="Enter the Module 1 Video"
-                    required={true}
-                  ></input>
-                </div>
-                <div>
-                  <label for="M2Video" className="form-label">
-                    Module 2 Video
-                  </label>
-                  <input
-                    type="url"
-                    className="form-control rounded-5"
-                    id="M2Video"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        M2Video: e.target.value,
-                      });
-                    }}
-                    placeholder="Enter the  Module 2 Video"
-                    required={true}
-                  ></input>
-                </div>
-                <div>
-                  <label for="M3Video" className="form-label">
-                    Module 3 Video
-                  </label>
-                  <input
-                    type="url"
-                    className="form-control rounded-2"
-                    id="M3Video"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        M3Video: e.target.value,
-                      });
-                    }}
-                    placeholder="Enter the Module 3 Video"
-                    required={true}
-                  ></input>
-                </div>
-                <div>
-                  <label for="Level" className="form-label">
-                    Level
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control rounded-2"
-                    id="Level"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        Level: e.target.value,
-                      });
-                    }}
-                    placeholder="Enter the Level"
-                    required={true}
-                  ></input>
-                </div>
-                <div>
-                  <label for="Price" className="form-label">
-                    Price
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control rounded-2"
-                    id="Price"
-                    onChange={(e) => {
-                      setCourse({
-                        ...Course,
-                        Price: e.target.value,
-                      });
-                    }}
-                    placeholder="Enter the Module 3 Title"
-                    required={true}
-                  ></input>
-                </div>
-                <div className="mt-2">
-                  <button
-                    className="btn   w-100 rounded-2 mb-2"
-                    style={{ backgroundColor: "black" ,color:'#FFA500'}}
-                    type="submit"
-                    value={"Create"}
-                    
-                  >
-                    Create
-                  </button>
-                </div>
-              </form>
+              <div className="p-3 justify-content-center " >
+                <form
+                  style={{ color: '#FFA500' }}
+                  onSubmit={handleSubmit}
+                  className=" fs-6 col-md-6 col-lg-5 col-xl-4 col-xxl-3 col-sm-8 align-self-center"
+                >
+                  <div>
+                    <label for="CourseName" className="form-label">
+                      Course Name
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control rounded-2"
+                      id="CourseName"
+                      placeholder="Enter the Course Name"
+                      required={true}
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          Name: e.target.value,
+                        });
+                      }}
+                    ></input>
+                  </div>
+                  <div>
+                    <label for="ImageUrl" className="form-label">
+                      Image Url
+                    </label>
+                    <input
+                      type="url"
+                      className="form-control rounded-2"
+                      id="ImageUrl"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          Image: e.target.value,
+                        });
+                      }}
+                      placeholder="Enter the Image Url"
+                      required={true}
+                    ></input>
+                  </div>
+                  <div class="mb-3">
+                    <label for="Description" class="form-label">
+                      Description
+                    </label>
+                    <textarea
+                      class="form-control"
+                      id="Description"
+                      rows="3"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          Des: e.target.value,
+                        });
+                      }}
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label for="M1Name" className="form-label">
+                      Module 1 Title
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control rounded-2"
+                      id="M1Name"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          M1Name: e.target.value,
+                        });
+                      }}
+                      placeholder="Enter the Module 1 Title"
+                      required={true}
+                    ></input>
+                  </div>
+                  <div>
+                    <label for="M2Name" className="form-label">
+                      Module 2 Title
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control rounded-2"
+                      id="M2Name"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          M2Name: e.target.value,
+                        });
+                      }}
+                      placeholder="Enter the Module 2 Title "
+                      required={true}
+                    ></input>
+                  </div>
+                  <div>
+                    <label for="M3Name" className="form-label">
+                      Module 3 Title
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control rounded-2"
+                      id="M3Name"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          M3Name: e.target.value,
+                        });
+                      }}
+                      placeholder="Enter the Module 3 Title"
+                      required={true}
+                    ></input>
+                  </div>
+                  <div>
+                    <label for="M1Video" className="form-label">
+                      Module 1 Video
+                    </label>
+                    <input
+                      type="url"
+                      className="form-control rounded-2"
+                      id="M1Video"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          M1Video: e.target.value,
+                        });
+                      }}
+                      placeholder="Enter the Module 1 Video"
+                      required={true}
+                    ></input>
+                  </div>
+                  <div>
+                    <label for="M2Video" className="form-label">
+                      Module 2 Video
+                    </label>
+                    <input
+                      type="url"
+                      className="form-control rounded-5"
+                      id="M2Video"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          M2Video: e.target.value,
+                        });
+                      }}
+                      placeholder="Enter the  Module 2 Video"
+                      required={true}
+                    ></input>
+                  </div>
+                  <div>
+                    <label for="M3Video" className="form-label">
+                      Module 3 Video
+                    </label>
+                    <input
+                      type="url"
+                      className="form-control rounded-2"
+                      id="M3Video"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          M3Video: e.target.value,
+                        });
+                      }}
+                      placeholder="Enter the Module 3 Video"
+                      required={true}
+                    ></input>
+                  </div>
+                  <div>
+                    <label for="Level" className="form-label">
+                      Level
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control rounded-2"
+                      id="Level"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          Level: e.target.value,
+                        });
+                      }}
+                      placeholder="Enter the Level"
+                      required={true}
+                    ></input>
+                  </div>
+                  <div>
+                    <label for="Price" className="form-label">
+                      Price
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control rounded-2"
+                      id="Price"
+                      onChange={(e) => {
+                        setCourse({
+                          ...Course,
+                          Price: e.target.value,
+                        });
+                      }}
+                      placeholder="Enter the Module 3 Title"
+                      required={true}
+                    ></input>
+                  </div>
+                  <div className="mt-2">
+                    <button
+                      className="btn   w-100 rounded-2 mb-2"
+                      style={{ backgroundColor: "black", color: '#FFA500' }}
+                      type="submit"
+                      value={"Create"}
+
+                    >
+                      Create
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       )}
       {Upadte && (
-        <div className="row mt-3" style={{color:'#FFA500'}}>
+        <div className="row mt-3" style={{ color: '#FFA500' }}>
           <div className="col">
             <form class="d-flex" role="search" onSubmit={handleSearch}>
               <input
@@ -485,14 +583,14 @@ export default function DashBoard(props) {
                 aria-label="Search"
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button class="btn bg-black  " type="submit" style={{color:'#FFA500'}}>
+              <button class="btn bg-black  " type="submit" style={{ color: '#FFA500' }}>
                 Search
               </button>
             </form>
           </div>
         </div>
       )}
-{Delete &&(
+      {Delete && (
         <div className="row mt-3">
           <div className="col">
             <form class="d-flex" role="search" onSubmit={handleSearch}>
@@ -503,17 +601,17 @@ export default function DashBoard(props) {
                 aria-label="Search"
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button class="btn" type="submit" style={{backgroundColor:"black",color:'#FFA500'}}>
+              <button class="btn" type="submit" style={{ backgroundColor: "black", color: '#FFA500' }}>
                 Search
               </button>
             </form>
           </div>
         </div>
       )
-        }
-    
+      }
+
       {Searched.length > 0 && (
-        <div className="row justify-content-center " style={{color:'#FFA500'}}>
+        <div className="row justify-content-center " style={{ color: '#FFA500' }}>
           <div className="col-sm-3 col-md-3   rounded-4 ">
             {Searched.map((e) => (
               <div
@@ -549,335 +647,335 @@ export default function DashBoard(props) {
                       View Course{" "}
                     </Link>
                   </div>
-                  {Delete &&(
-                    <button style={{ backgroundColor: "black",color:'#FFA500'}}  className="btn w-100 mt-2" onClick={handelDelete}>Delete</button>
+                  {Delete && (
+                    <button style={{ backgroundColor: "black", color: '#FFA500' }} className="btn w-100 mt-2" onClick={handelDelete}>Delete</button>
                   )}
                 </div>
               </div>
             ))}
           </div>
-          {Upadte&&(
-          <div className="col-xxl-6 mt-3 align-content-center">
-            <div class="accordion" id="accordionExample">
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
-                    aria-expanded="true"
-                    aria-controls="collapseOne"
+          {Upadte && (
+            <div className="col-xxl-6 mt-3 align-content-center">
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      what are the field sets like to change ?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseOne"
+                    class="accordion-collapse collapse show"
+                    data-bs-parent="#accordionExample"
                   >
-                    what are the field sets like to change ?
-                  </button>
-                </h2>
-                <div
-                  id="collapseOne"
-                  class="accordion-collapse collapse show"
-                  data-bs-parent="#accordionExample"
-                >
-                  <div class="accordion-body">
-                    <div className="row P-2">
-                      <form className="row" onSubmit={handleupdatecheck}>
-                        <div class=" col-sm-3 form-check  form-switch ">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="Name"
-                            onChange={(e) => {
-                              if (!updateCheck.Name) {
-                                setChecked({
-                                  ...updateCheck,
-                                  Name: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  Name: "",
-                                });
-                              }
-                            }}
-                            id="Name"
-                          />
-                          <label class="form-check-label" for="Name">
-                            Name
-                          </label>
-                        </div>
-                        <div class=" col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="Image"
-                            onChange={(e) => {
-                              if (!updateCheck.Image) {
-                                setChecked({
-                                  ...updateCheck,
-                                  Image: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  Image: "",
-                                });
-                              }
-                            }}
-                            id="Image"
-                          />
-                          <label class="form-check-label" for="Image">
-                            Image
-                          </label>
-                        </div>
-                        <div class=" col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="Des"
-                            onChange={(e) => {
-                              if (!updateCheck.Des) {
-                                setChecked({
-                                  ...updateCheck,
-                                  Des: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  Des: "",
-                                });
-                              }
-                            }}
-                            id="Des"
-                          />
-                          <label class="form-check-label" for="Dest">
-                            Description
-                          </label>
-                        </div>
-                        <div class=" col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="M1Name"
-                            id="M1Name"
-                            onChange={(e) => {
-                              if (!updateCheck.M1Name) {
-                                setChecked({
-                                  ...updateCheck,
-                                  M1Name: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  M1Name: "",
-                                });
-                              }
-                            }}
-                          />
-                          <label class="form-check-label" for="M1Name">
-                            Module-1 Title
-                          </label>
-                        </div>
-                        <div class=" col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="M2Name"
-                            onChange={(e) => {
-                              if (!updateCheck.M2Name) {
-                                setChecked({
-                                  ...updateCheck,
-                                  M2Name: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  M2Name: "",
-                                });
-                              }
-                            }}
-                            id="M2Name"
-                          />
-                          <label class="form-check-label" for="M2Name">
-                            Module-2 Title
-                          </label>
-                        </div>
-                        <div class="col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="M3Name"
-                            onChange={(e) => {
-                              if (!updateCheck.M3Name) {
-                                setChecked({
-                                  ...updateCheck,
-                                  M3Name: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  M3Name: "",
-                                });
-                              }
-                            }}
-                            id="M3Name"
-                          />
+                    <div class="accordion-body">
+                      <div className="row P-2">
+                        <form className="row" onSubmit={handleupdatecheck}>
+                          <div class=" col-sm-3 form-check  form-switch ">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="Name"
+                              onChange={(e) => {
+                                if (!updateCheck.Name) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Name: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Name: "",
+                                  });
+                                }
+                              }}
+                              id="Name"
+                            />
+                            <label class="form-check-label" for="Name">
+                              Name
+                            </label>
+                          </div>
+                          <div class=" col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="Image"
+                              onChange={(e) => {
+                                if (!updateCheck.Image) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Image: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Image: "",
+                                  });
+                                }
+                              }}
+                              id="Image"
+                            />
+                            <label class="form-check-label" for="Image">
+                              Image
+                            </label>
+                          </div>
+                          <div class=" col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="Des"
+                              onChange={(e) => {
+                                if (!updateCheck.Des) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Des: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Des: "",
+                                  });
+                                }
+                              }}
+                              id="Des"
+                            />
+                            <label class="form-check-label" for="Dest">
+                              Description
+                            </label>
+                          </div>
+                          <div class=" col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="M1Name"
+                              id="M1Name"
+                              onChange={(e) => {
+                                if (!updateCheck.M1Name) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M1Name: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M1Name: "",
+                                  });
+                                }
+                              }}
+                            />
+                            <label class="form-check-label" for="M1Name">
+                              Module-1 Title
+                            </label>
+                          </div>
+                          <div class=" col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="M2Name"
+                              onChange={(e) => {
+                                if (!updateCheck.M2Name) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M2Name: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M2Name: "",
+                                  });
+                                }
+                              }}
+                              id="M2Name"
+                            />
+                            <label class="form-check-label" for="M2Name">
+                              Module-2 Title
+                            </label>
+                          </div>
+                          <div class="col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="M3Name"
+                              onChange={(e) => {
+                                if (!updateCheck.M3Name) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M3Name: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M3Name: "",
+                                  });
+                                }
+                              }}
+                              id="M3Name"
+                            />
 
-                          <label class="form-check-label" for="M3Name">
-                            Module-3 Title
-                          </label>
-                        </div>
-                        <div class=" col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="M1Video"
-                            onChange={(e) => {
-                              if (!updateCheck.M1Video) {
-                                setChecked({
-                                  ...updateCheck,
-                                  M1Video: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  M1Video: "",
-                                });
-                              }
-                            }}
-                            id="M1Video"
-                          />
-                          <label class="form-check-label" for="M1Video">
-                            Module-1 Video
-                          </label>
-                        </div>
-                        <div class=" col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="M2Video"
-                            onChange={(e) => {
-                              if (!updateCheck.M2Video) {
-                                setChecked({
-                                  ...updateCheck,
-                                  M2Video: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  M2Video: "",
-                                });
-                              }
-                            }}
-                            id="M2Video"
-                          />
-                          <label class="form-check-label" for="M2Video">
-                            Module-2 Video
-                          </label>
-                        </div>
-                        <div class=" col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="M3Video"
-                            onChange={(e) => {
-                              if (!updateCheck.M3Video) {
-                                setChecked({
-                                  ...updateCheck,
-                                  M3Video: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  M3Video: "",
-                                });
-                              }
-                            }}
-                            id="M3Video"
-                          />
-                          <label class="form-check-label" for="M3Video">
-                            Module-3 Video
-                          </label>
-                        </div>
-                        <div class="col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            onChange={(e) => {
-                              if (!updateCheck.Level) {
-                                setChecked({
-                                  ...updateCheck,
-                                  Level: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  Level: "",
-                                });
-                              }
-                            }}
-                            value="Level"
-                            id="Level"
-                          />
-                          <label class="form-check-label" for="Level">
-                            Level
-                          </label>
-                        </div>
-                        <div class=" col-sm-3 form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            value="Price"
-                            onChange={(e) => {
-                              if (!updateCheck.Price) {
-                                setChecked({
-                                  ...updateCheck,
-                                  Price: e.target.value,
-                                });
-                              } else {
-                                setChecked({
-                                  ...updateCheck,
-                                  Price: "",
-                                });
-                              }
-                            }}
-                            id="Price"
-                          />
-                          <label class="form-check-label" for="Price">
-                            Price
-                          </label>
-                        </div>
-                        <div className="col-sm-4  text-center ">
-                          <button
-                            className="btn text  w-100 rounded-5 mb-2"
-                            style={{ backgroundColor: "#27374D" }}
-                            type="submit"
-                            value={"Generate Fields"}
-                          >
-                            Generate Fields
-                          </button>
-                        </div>
-                      </form>
+                            <label class="form-check-label" for="M3Name">
+                              Module-3 Title
+                            </label>
+                          </div>
+                          <div class=" col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="M1Video"
+                              onChange={(e) => {
+                                if (!updateCheck.M1Video) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M1Video: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M1Video: "",
+                                  });
+                                }
+                              }}
+                              id="M1Video"
+                            />
+                            <label class="form-check-label" for="M1Video">
+                              Module-1 Video
+                            </label>
+                          </div>
+                          <div class=" col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="M2Video"
+                              onChange={(e) => {
+                                if (!updateCheck.M2Video) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M2Video: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M2Video: "",
+                                  });
+                                }
+                              }}
+                              id="M2Video"
+                            />
+                            <label class="form-check-label" for="M2Video">
+                              Module-2 Video
+                            </label>
+                          </div>
+                          <div class=" col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="M3Video"
+                              onChange={(e) => {
+                                if (!updateCheck.M3Video) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M3Video: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    M3Video: "",
+                                  });
+                                }
+                              }}
+                              id="M3Video"
+                            />
+                            <label class="form-check-label" for="M3Video">
+                              Module-3 Video
+                            </label>
+                          </div>
+                          <div class="col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              onChange={(e) => {
+                                if (!updateCheck.Level) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Level: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Level: "",
+                                  });
+                                }
+                              }}
+                              value="Level"
+                              id="Level"
+                            />
+                            <label class="form-check-label" for="Level">
+                              Level
+                            </label>
+                          </div>
+                          <div class=" col-sm-3 form-check form-switch">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              value="Price"
+                              onChange={(e) => {
+                                if (!updateCheck.Price) {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Price: e.target.value,
+                                  });
+                                } else {
+                                  setChecked({
+                                    ...updateCheck,
+                                    Price: "",
+                                  });
+                                }
+                              }}
+                              id="Price"
+                            />
+                            <label class="form-check-label" for="Price">
+                              Price
+                            </label>
+                          </div>
+                          <div className="col-sm-4  text-center ">
+                            <button
+                              className="btn text  w-100 rounded-5 mb-2"
+                              style={{ backgroundColor: "#27374D" }}
+                              type="submit"
+                              value={"Generate Fields"}
+                            >
+                              Generate Fields
+                            </button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
           )}
         </div>
-    )}
+      )}
       {generate && (
-        <form 
+        <form
           className="p-3 fs-6 col-md-6 col-lg-5 col-xl-4 col-xxl-3 col-sm-8  align-self-center "
           onSubmit={handleupdate}
         >

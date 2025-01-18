@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 export default function Footer(){
     return(
-        <div  className="  conatiner-fluid   bg-dark"  style={{color:'#FFA500',mariginTop:'98vh'}}>
+        <div  className="  conatiner-fluid   ctn"  style={{color:'#FFA500'}}>
     
              <div className="col-sm-2  "style={{color:'#FFA500'}}>
                 
-                <ul   className="p-2 lh-base " style={{listStyle:'none',lineSpacing:'even'}}> 
+                <ul   className="p-2  " style={{listStyle:'none',lineSpacing:'even'}}> 
                     <h3>Section</h3>
                     <li >
                     <Link  style={{textDecoration:'none',color:'#FFA500'}} to={'/'}>Home</Link>

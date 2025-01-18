@@ -1,58 +1,77 @@
-import React, { useState, useEffect } from "react";
-import "bootstrap/dist/js/bootstrap.bundle";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Dp from "./717821p224_photo .jpg";
-import Enrolled from "./EnrolledCourse";
-import Completed from "./Completed";
-import DashBoard from "./MentorDashBoard";
 import axios from "axios";
-import { useNavigate, useParams,Link } from "react-router-dom";
-import { data } from "./App";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Completed from "./Completed";
+import Enrolled from "./EnrolledCourse";
 import { auth } from "./firebase";
-let MentorCourse=[];
+import DashBoard from "./MentorDashBoard";
+
  
 export default function Profile() {
-  const [Profile,setProfile]=useState([]);
-
+  const [Profile,setProfile]=useState({});
+ 
   const navigate = useNavigate();
   const [StateEnrolled, setEnrolled] = useState(false);
   const [StateCompleted, setCompleted] = useState(false);
   const [StateDashBoard, setDashBoard] = useState(false);
-  console.log(auth);
-   useEffect(() => {
-    async function getsProfile() {
-    const response = await axios.get("http://localhost:3001/Profile");
-    setProfile(response.data);
-    } getsProfile(); }, []);
-    let Filter=[]
-    if(auth.currentUser!=null){
-    Filter=Profile.filter((e)=>e.Uid===auth._delegate.currentUser.uid)
-    }else{
-      alert("Please Login");
+  const[Token,setToken]=useState(sessionStorage.getItem("token"));
+  if(!Token){
+  setToken(sessionStorage.getItem("token"));
+  }
+ 
+  useEffect(() => {
+    async function getProfile() {
+      try {
+        
+          const response = await axios.get(
+            "https://kk-elearn.onrender.com/Profile",
+            {
+              params: { Username: auth.currentUser.displayName }, // Pass query parameters here
+              headers: {
+                Authorization: `Bearer ${Token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log(response.data);
+          setProfile(response.data); // Update profile state
+        
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        alert("Failed to fetch profile. Please try again."); // Replace with better UI feedback if possible
+      }
     }
+  
+    getProfile(); // Call the async function
+  }, []); // Include email in dependency array if it can change
+  
+  
+
   
   return (
     <div className="container-fluid">
-      {Filter.map((e) => (
+
         <div
           className="row  "
           style={{ minHeight: "calc(100vh)" }}
         >
           <div className=" col-md-3 col-xxl-2 col-xs-3 col-lg-3 col-sm-3  " style={{color:'#FFA500'}}>
             <div
-              class="card  bg-dark   h-100"
+              class="card    h-100"
               style={{  width: "auto" }}
             >
               <img
-                src={e.Photourl}
+                src={Profile.Photourl}
                 alt="..."
                 className=" align-self-center  card-img-top w-auto h-auto rounded-pill"
               />
               <h5 class="card-title text-center   fs-6" style={{color:'#FFA500'}}>
-                {e.Username}
+                {Profile.Username}
               </h5>
               <div class="card-body text-start">
-                <h6 className=" text-center  " style={{color:'#FFA500'}}>{e.Role}</h6>
+                <h6 className=" text-center  " style={{color:'#FFA500'}}>{Profile.Role}</h6>
                 <div className="">
                   <ul
                     class="list-group text-start  "
@@ -61,7 +80,7 @@ export default function Profile() {
                     }}
                   >
                     <div className="row h-100 mb-3 "style={{color:'#FFA500'}}>
-                      {e.Role === "Mentor" && (
+                      {Profile.Role === "Mentor" && (
                         <li>
                           <a
                             class="   w-100 text-decoration-none"
@@ -78,7 +97,7 @@ export default function Profile() {
                       )}
                     </div>
                     <div className="row h-100 mb-3 " style={{color:'#FFA500'}}>
-                      {e.Role === "Mentor" && (
+                      {Profile.Role === "Mentor" && (
                         <li>
                           <a
                             class="   w-100  text-decoration-none"
@@ -131,11 +150,7 @@ export default function Profile() {
                         </a>
                       </li>
                     </div>
-                    <div className="row h-100 mb-3 " style={{color:'#FFA500'}}>
-                      <li>
-                      <Link  style={{textDecoration:'none',color:'#FFA500'}} to={`/Cart`}>Cart</Link>
-                      </li>
-                    </div>
+                    
                   </ul>
                 </div>
               </div>
@@ -160,12 +175,12 @@ export default function Profile() {
                 onClick={() => navigate('/')}
               ></button>
             </div>
-            {StateEnrolled && <Enrolled data={e.Enrolled} />}
-            {StateCompleted && <Completed data={e.Completed} />}
-            {StateDashBoard && <DashBoard Mentor={MentorCourse}/>}
+            {StateEnrolled && <Enrolled data={Profile.Enrolled} />}
+            {StateCompleted && <Completed data={Profile.Completed} />}
+            {StateDashBoard && <DashBoard/>}
           </div>
         </div>
-      ))}
+
     </div>
     );
     

@@ -1,15 +1,13 @@
+import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle';
 import React from "react";
-import Nav from './Nav2'
+import { Link } from "react-router-dom";
+import { data } from "./App";
+import Footer from "./Footer";
+import Nav from './Nav2';
 import Search from "./Search";
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import  'bootstrap/dist/js/bootstrap.bundle';
-import axios from "axios";
-import { data } from "./App";
-import { User } from "./App";
-import { Link } from "react-router-dom";
-import Footer from "./Footer";
-import Filter from "./Filter2";
 export default function Course(){
  let id;
     return (
@@ -17,11 +15,11 @@ export default function Course(){
       <Nav ><Search>
           </Search>
           </Nav>
-        <div className="container-fluid ">
+        <div className="container-fluid  app-container">
             <div className="row"  style={{color:'#FFA500'}}>
             {data.map((e) => (
               <div className="col-sm-3 col-md-5  col-xl-4 col-xxl-3 col-lg-4 fs-6 mt-2 mb-2  "   style={{color:'#FFA500'}}>
-                <div class="  shadow card   bg-dark  " style={{ width: "auto" }}>
+                <div class="  shadow card  " style={{ width: "18rem" }}>
                   <img src={e.Image} class="card-img-top" alt="..." width={'auto'}  />
                   <div className=" card-body " style={{color:'#FFA500'}} >
                     <h5 className="card-title  " style={{color:'#FFA500'}}>{e.Name}</h5>

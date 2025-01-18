@@ -1,23 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import Filter from './Filter2'
-import Course from './Course';
-import reportWebVitals from './reportWebVitals';
-import {Route,Routes,BrowserRouter} from 'react-router-dom'
-import Register from './Register';
-import Login from './Login';
-import Profile from './Profile';
-import Enrolled from './EnrolledCourse';
-import Completed from './Completed';
-import Timer from './Timer';
-import Cert from './Certificate';
-import ViewCourse from './ViewCourse';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminDashboard from './AdminDashboard';
-import AddtoCart from './AddtoCart';
-import Nav from "./Nav2";
+import App from './App';
+import Cert from './Certificate';
 import Checkouts from './Checkout';
+import Completed from './Completed';
+import Course from './Course';
+import Enrolled from './EnrolledCourse';
+import Filter from './Filter2';
+import './index.css';
+import Login from './Login';
+import Nav from "./Nav2";
+import Profile from './Profile';
+import Register from './Register';
+import reportWebVitals from './reportWebVitals';
+import Timer from './Timer';
+import ViewCourse from './ViewCourse';
+import Youtube from './Youtube';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -37,9 +37,9 @@ root.render(
 <Route path='/Timer' element={<Timer/>}></Route>
 <Route path="/ViewCourse/:id"element={<ViewCourse/>}></Route>
 <Route path="/Admin/:username"element={<AdminDashboard/>}></Route>
-<Route path="/Cart"element={<AddtoCart/>}></Route>
-<Route path="/Checkouts"element={<Checkouts/>}></Route>
 
+<Route path="/Checkouts"element={<Checkouts/>}></Route>
+<Route path='/Check' element={<Youtube/>}></Route>
    </Routes>
     </BrowserRouter>
   </React.StrictMode>
