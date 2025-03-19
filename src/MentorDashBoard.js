@@ -15,6 +15,7 @@ export default function DashBoard() {
   const [Search, setSearch] = useState();
   const [Profile, setProfile] = useState([]);
   const [Searched, setSearched] = useState([]);
+  const[MentorName,setMen]=useState("");
 
   const [Token, setToken] = useState(sessionStorage.getItem("token"));
   if (!Token) {
@@ -64,7 +65,7 @@ export default function DashBoard() {
   }, []); // Incl
 
 
-  let MentorName = "";
+  setMen(Profile.Username);
 
   const [updateCheck, setChecked] = useState({
     Name: "",
