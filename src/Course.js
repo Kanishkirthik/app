@@ -19,8 +19,8 @@ export default function Course(){
             <div className="row"  style={{color:'#FFA500'}}>
             {data.map((e) => (
               <div className="col-sm-3 col-md-5  col-xl-4 col-xxl-3 col-lg-4 fs-6 mt-2 mb-2  "   style={{color:'#FFA500'}}>
-                <div class="  shadow card  " style={{ width: "18rem" }}>
-                  <img src={e.Image} class="card-img-top" alt="..." width={'auto'}  />
+                <div class="  shadow card  " style={{ width: "18rem"  ,height:"13rem"}}>
+                  <img src={e.Image} class="card-img-top" alt="..." width={'auto'} />
                   <div className=" card-body " style={{color:'#FFA500'}} >
                     <h5 className="card-title  " style={{color:'#FFA500'}}>{e.Name}</h5>
                     <h6 className="text-end ">

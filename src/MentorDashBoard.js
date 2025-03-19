@@ -15,7 +15,7 @@ export default function DashBoard() {
   const [Search, setSearch] = useState();
   const [Profile, setProfile] = useState([]);
   const [Searched, setSearched] = useState([]);
-  const[MentorName,setMen]=useState("");
+  
 
   const [Token, setToken] = useState(sessionStorage.getItem("token"));
   if (!Token) {
@@ -63,10 +63,9 @@ export default function DashBoard() {
 
     getProfile(); // Call the async function
   }, []); // Incl
-
-
-  setMen(Profile.Username);
-
+  let  MentorName=Profile.Username;
+  
+  console.log(MentorName);
   const [updateCheck, setChecked] = useState({
     Name: "",
     Image: "",
@@ -136,7 +135,7 @@ export default function DashBoard() {
     }
     if (Updatedata.Image.length > 0) {
       axios
-        .put(`https://kk-elearn.onrender.com/Course${id}`, {
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
           Image: Updatedata.Image
         }, {
           headers: {
@@ -149,7 +148,7 @@ export default function DashBoard() {
     }
     if (Updatedata.Des.length > 0) {
       axios
-        .put(`https://kk-elearn.onrender.com/Course${id}`, {
+        .put(`https://kk-elearn.onrender.com/Course/${id}`, {
           Des: Updatedata.Des
         }, {
           headers: {
